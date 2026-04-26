@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className={isAdmin ? "min-h-screen" : "flex-1"}>{children}</main>
         {!isAdmin && <Footer />}
         {!isAdmin && <WhatsAppButton />}
+        <Analytics />
       </body>
     </html>
   );

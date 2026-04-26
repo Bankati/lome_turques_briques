@@ -1,0 +1,190 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Pipeline CI — Lomé Turque Brique
+# Déclenché : push sur main + toute pull request vers main
+#
+# Jobs (parallèles sauf build) :
+#   quality  → ESLint + TypeScript + Prettier
+#   test     → Jest + couverture de code
+#   security → npm audit (high & critical)
+#   build    → next build (dépend de quality + test)
+# ─────────────────────────────────────────────────────────────────────────────
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Annule les runs en cours sur la même branche si un nouveau push arrive.
+# Évite de gaspiller des minutes GitHub Actions sur du code obsolète.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+  NEXT_TELEMETRY_DISABLED: "1"
+  # Valeur fictive pour `prisma generate` : ne se connecte pas à la DB,
+  # génère uniquement les types TypeScript depuis le schéma.
+  DATABASE_URL: "postgresql://ci_user:ci_password@localhost:5432/ci_db"
+  DIRECT_URL: "postgresql://ci_user:ci_password@localhost:5432/ci_db"
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  # JOB 1 — Qualité du code
+  # Vérifie : ESLint · TypeScript (tsc --noEmit) · Prettier
+  # ───────────────────────────────────────────────────────────────────────────
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # setup-node@v4 gère le cache npm automatiquement via `cache: 'npm'`.
+      # La clé est basée sur le hash de package-lock.json → invalidée si les
+      # dépendances changent.
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      # npm ci : installation stricte depuis package-lock.json, jamais de màj.
+      - name: Install dependencies
+        run: npm ci
+
+      # Génère le client Prisma (types TS) depuis le schéma.
+      # Requis avant ESLint et TypeScript pour éviter les erreurs d'import.
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: TypeScript check (tsc --noEmit)
+        run: npm run typecheck
+
+      # Échoue si un fichier n'est pas formaté selon .prettierrc.
+      # Première utilisation : lancez `npm run format` localement avant de push.
+      - name: Prettier format check
+        run: npm run format:check
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # JOB 2 — Tests & Couverture de code
+  # Exécute Jest, génère le rapport de couverture et l'archive comme artifact.
+  # ───────────────────────────────────────────────────────────────────────────
+  test:
+    name: Tests & Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      # --ci      : pas de mise à jour de snapshots, erreur si snapshot manquant
+      # --coverage: collecte la couverture selon jest.config.ts
+      # --forceExit: force la sortie après les tests (évite les handles ouverts)
+      - name: Run tests with coverage
+        run: npm run test:ci
+
+      # L'artifact est uploadé même si les tests échouent (if: always())
+      # pour permettre l'analyse des erreurs et de la couverture.
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 14
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # JOB 3 — Audit de sécurité
+  #
+  # Stratégie à deux niveaux :
+  #   CRITICAL → bloque le pipeline (aucun compromis acceptable)
+  #   HIGH     → rapport informatif sans blocage
+  #
+  # Pourquoi ne pas bloquer sur HIGH aujourd'hui ?
+  #   Des CVEs HIGH existent dans next@14.x (GHSA-9g9p-9gw9-jx7f,
+  #   GHSA-h25m-26qc-wcjf, etc.) sans patch disponible en v14.
+  #   La correction nécessite une migration vers Next.js 15 (breaking change).
+  #   → Ticket de suivi à créer : "Migrer vers Next.js 15"
+  #   → Dès la migration effectuée, remplacer critical par high ci-dessous.
+  # ───────────────────────────────────────────────────────────────────────────
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Bloque sur CRITICAL uniquement. Aucune vulnérabilité critique connue.
+      - name: npm audit — CRITICAL (bloque le pipeline)
+        run: npm audit --audit-level=critical
+
+      # Rapport complet HIGH sans blocage. Visible dans les logs du job.
+      # TODO : remplacer par --audit-level=high sans continue-on-error
+      #        après migration vers Next.js 15.
+      - name: npm audit — HIGH (rapport informatif)
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # JOB 4 — Build de production
+  # S'exécute APRÈS quality + test pour éviter de compiler du code invalide.
+  # Exécute : prisma generate + next build
+  # ───────────────────────────────────────────────────────────────────────────
+  build:
+    name: Production Build
+    runs-on: ubuntu-latest
+    needs: [quality, test]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      # `npm run build` = `prisma generate && next build` (cf. package.json)
+      - name: Build
+        run: npm run build
+
+      # Optionnel : archiver le build pour déploiement ou inspection
+      # - name: Upload build artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: nextjs-build
+      #     path: .next/
+      #     retention-days: 3

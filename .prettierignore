@@ -1,0 +1,15 @@
+# Build & cache
+.next/
+node_modules/
+coverage/
+
+# Assets statiques
+public/
+
+# Prisma (auto-généré)
+prisma/migrations/
+
+# Fichiers de configuration binaires ou auto-générés
+package-lock.json
+*.min.js
+*.min.css

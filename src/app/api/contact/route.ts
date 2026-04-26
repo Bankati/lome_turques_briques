@@ -17,10 +17,7 @@ export async function POST(request: Request) {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Adresse email invalide." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Adresse email invalide." }, { status: 400 });
     }
 
     const contact = await prisma.contactMessage.create({
@@ -33,10 +30,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(
-      { success: true, id: contact.id },
-      { status: 201 }
-    );
+    return NextResponse.json({ success: true, id: contact.id }, { status: 201 });
   } catch (error) {
     console.error("POST contact error:", error);
     return NextResponse.json(
@@ -54,9 +48,6 @@ export async function GET() {
     return NextResponse.json(messages);
   } catch (error) {
     console.error("GET contact error:", error);
-    return NextResponse.json(
-      { error: "Impossible de récupérer les messages." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Impossible de récupérer les messages." }, { status: 500 });
   }
 }

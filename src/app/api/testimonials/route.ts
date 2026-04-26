@@ -12,10 +12,7 @@ export async function GET() {
     return NextResponse.json(testimonials);
   } catch (error) {
     console.error("GET testimonials error:", error);
-    return NextResponse.json(
-      { error: "Impossible de récupérer les témoignages" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Impossible de récupérer les témoignages" }, { status: 500 });
   }
 }
 
@@ -38,9 +35,6 @@ export async function POST(request: Request) {
     return NextResponse.json(testimonial, { status: 201 });
   } catch (error) {
     console.error("POST testimonial error:", error);
-    return NextResponse.json(
-      { error: "Impossible d'enregistrer le témoignage" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Impossible d'enregistrer le témoignage" }, { status: 500 });
   }
 }

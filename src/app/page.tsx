@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -54,8 +55,7 @@ const qualities = [
   {
     icon: Palette,
     title: "Esthétique",
-    description:
-      "Des finitions variées pour s'adapter à tous vos projets architecturaux.",
+    description: "Des finitions variées pour s'adapter à tous vos projets architecturaux.",
   },
 ];
 
@@ -83,23 +83,28 @@ const products = [
 const faqData = [
   {
     question: "Quels types de briques proposez-vous ?",
-    answer: "Nous proposons trois gammes principales : les briques creuses (légères et économiques), les briques pleines (haute densité pour murs porteurs), et les pavés (antidérapants pour sols extérieurs et allées).",
+    answer:
+      "Nous proposons trois gammes principales : les briques creuses (légères et économiques), les briques pleines (haute densité pour murs porteurs), et les pavés (antidérapants pour sols extérieurs et allées).",
   },
   {
     question: "Quel est le délai de livraison pour une commande ?",
-    answer: "Pour les commandes standards dans la région de Lomé, la livraison se fait sous 24 à 48 heures ouvrables. Pour les grandes quantités ou les livraisons hors région, nous vous fournissons un devis personnalisé.",
+    answer:
+      "Pour les commandes standards dans la région de Lomé, la livraison se fait sous 24 à 48 heures ouvrables. Pour les grandes quantités ou les livraisons hors région, nous vous fournissons un devis personnalisé.",
   },
   {
     question: "Quels sont les avantages des briques turques ?",
-    answer: "Les briques turques offrent une résistance thermique supérieure, une durabilité exceptionnelle face aux intempéries, un excellent rapport qualité-prix et une finition esthétique soignée adaptée à tous les styles architecturaux.",
+    answer:
+      "Les briques turques offrent une résistance thermique supérieure, une durabilité exceptionnelle face aux intempéries, un excellent rapport qualité-prix et une finition esthétique soignée adaptée à tous les styles architecturaux.",
   },
   {
     question: "Proposez-vous des conseils pour choisir mes briques ?",
-    answer: "Oui, notre équipe commerciale et nos ingénieurs sont à votre disposition pour vous guider selon votre projet : fondations, murs de clôture, dallage extérieur, ou construction de maison. Nous effectuons même des visites sur chantier.",
+    answer:
+      "Oui, notre équipe commerciale et nos ingénieurs sont à votre disposition pour vous guider selon votre projet : fondations, murs de clôture, dallage extérieur, ou construction de maison. Nous effectuons même des visites sur chantier.",
   },
   {
     question: "Quels facteurs influencent le prix des briques ?",
-    answer: "Le prix dépend du type de brique (creuse, pleine ou pavé), de la quantité commandée (tarifs dégressifs à partir de 5 000 unités), du lieu de livraison et des options de finition. Contactez-nous pour un devis sur mesure.",
+    answer:
+      "Le prix dépend du type de brique (creuse, pleine ou pavé), de la quantité commandée (tarifs dégressifs à partir de 5 000 unités), du lieu de livraison et des options de finition. Contactez-nous pour un devis sur mesure.",
   },
 ];
 
@@ -112,9 +117,35 @@ interface TestimonialData {
   createdAt: string;
 }
 
+const fallbackTestimonials: TestimonialData[] = [
+  {
+    id: "1",
+    text: "J'ai construit ma maison avec les briques de Lomé Turque Brique et je suis plus que satisfait. La qualité est exceptionnelle et le service client impeccable.",
+    name: "Koffi A.",
+    role: "Lomé",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "2",
+    text: "Entreprise sérieuse et professionnelle. Les briques livrées étaient exactement comme sur les échantillons. Je recommande vivement !",
+    name: "Amah E.",
+    role: "Architecte",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "3",
+    text: "La résistance de ces briques est remarquable. Même après la saison des pluies, aucun problème à signaler. Un investissement durable.",
+    name: "Séna G.",
+    role: "Promoteur immobilier",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+];
+
 export default function Home() {
   const [currentHero, setCurrentHero] = useState(0);
-  const [direction, setDirection] = useState(0);
   const [showTestimonialModal, setShowTestimonialModal] = useState(false);
   const [testimonialForm, setTestimonialForm] = useState({
     name: "",
@@ -125,37 +156,9 @@ export default function Home() {
   const [testimonialSubmitted, setTestimonialSubmitted] = useState(false);
   const [testimonials, setTestimonials] = useState<TestimonialData[]>([]);
   const [testimonialsLoading, setTestimonialsLoading] = useState(true);
-  const [testimonialsError, setTestimonialsError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  const fallbackTestimonials: TestimonialData[] = [
-    {
-      id: "1",
-      text: "J'ai construit ma maison avec les briques de Lomé Turque Brique et je suis plus que satisfait. La qualité est exceptionnelle et le service client impeccable.",
-      name: "Koffi A.",
-      role: "Lomé",
-      rating: 5,
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "2",
-      text: "Entreprise sérieuse et professionnelle. Les briques livrées étaient exactement comme sur les échantillons. Je recommande vivement !",
-      name: "Amah E.",
-      role: "Architecte",
-      rating: 5,
-      createdAt: new Date().toISOString(),
-    },
-    {
-      id: "3",
-      text: "La résistance de ces briques est remarquable. Même après la saison des pluies, aucun problème à signaler. Un investissement durable.",
-      name: "Séna G.",
-      role: "Promoteur immobilier",
-      rating: 5,
-      createdAt: new Date().toISOString(),
-    },
-  ];
 
   // Load testimonials from API
   useEffect(() => {
@@ -170,8 +173,7 @@ export default function Home() {
         } else {
           setTestimonials(fallbackTestimonials);
         }
-      } catch (err) {
-        setTestimonialsError("Impossible de charger les témoignages");
+      } catch {
         setTestimonials(fallbackTestimonials);
       } finally {
         setTestimonialsLoading(false);
@@ -188,12 +190,13 @@ export default function Home() {
   }, []);
 
   const nextHero = () => setCurrentHero((prev) => (prev + 1) % heroImages.length);
-  const prevHero = () => setCurrentHero((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  const prevHero = () =>
+    setCurrentHero((prev) => (prev - 1 + heroImages.length) % heroImages.length);
 
   return (
     <div>
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
         {/* Background slideshow */}
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
@@ -205,10 +208,11 @@ export default function Home() {
               transition={{ duration: 1.2 }}
               className="absolute inset-0"
             >
-              <img
+              <Image
                 src={heroImages[currentHero]}
                 alt="Construction en briques"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </motion.div>
           </AnimatePresence>
@@ -218,9 +222,17 @@ export default function Home() {
         </div>
 
         {/* Diagonal brick pattern overlay inspired by reference image */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 opacity-[0.03]">
           <svg width="100%" height="100%">
-            <pattern id="bricks-chevron" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <pattern
+              id="bricks-chevron"
+              x="0"
+              y="0"
+              width="80"
+              height="80"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(45)"
+            >
               <rect x="0" y="0" width="36" height="36" fill="white" />
               <rect x="40" y="40" width="36" height="36" fill="white" />
             </pattern>
@@ -228,13 +240,13 @@ export default function Home() {
           </svg>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium mb-6 border border-white/20">
+            <span className="mb-6 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">
               🇹🇬 La qualité turque au service du Togo
             </span>
           </motion.div>
@@ -243,7 +255,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="font-heading text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+            className="mb-6 font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-7xl"
           >
             Bienvenue chez
             <br />
@@ -254,7 +266,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-sm sm:text-lg lg:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="mx-auto mb-10 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-lg lg:text-xl"
           >
             Nous produisons des briques solides et esthétiques pour vos constructions modernes.
             Alliant le savoir-faire turque et les ressources locales.
@@ -264,18 +276,18 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col justify-center gap-4 sm:flex-row"
           >
             <Link
               href="/contact/"
-              className="group px-8 py-4 bg-white text-ltb-blue rounded-full font-semibold text-lg hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg inline-flex items-center justify-center gap-2"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-ltb-blue shadow-lg transition-all duration-300 hover:scale-105 hover:bg-white/90 hover:shadow-xl"
             >
               Contactez-nous
-              <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              <ChevronRight size={20} className="transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               href="/produits/"
-              className="px-8 py-4 bg-transparent border-2 border-white/40 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 inline-flex items-center justify-center"
+              className="inline-flex items-center justify-center rounded-full border-2 border-white/40 bg-transparent px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-white/10"
             >
               Découvrir nos produits
             </Link>
@@ -283,29 +295,29 @@ export default function Home() {
         </div>
 
         {/* Hero navigation arrows */}
-        <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 z-20 flex justify-between pointer-events-none">
+        <div className="pointer-events-none absolute left-4 right-4 top-1/2 z-20 flex -translate-y-1/2 justify-between">
           <button
             onClick={prevHero}
-            className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all pointer-events-auto border border-white/20"
+            className="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20"
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={nextHero}
-            className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-all pointer-events-auto border border-white/20"
+            className="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm transition-all hover:bg-white/20"
           >
             <ChevronRight size={24} />
           </button>
         </div>
 
         {/* Hero dots indicator */}
-        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div className="absolute bottom-24 left-1/2 z-20 flex -translate-x-1/2 gap-2">
           {heroImages.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentHero(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                i === currentHero ? "bg-white w-8" : "bg-white/40 hover:bg-white/60"
+              className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                i === currentHero ? "w-8 bg-white" : "bg-white/40 hover:bg-white/60"
               }`}
             />
           ))}
@@ -316,7 +328,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+          className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -330,34 +342,34 @@ export default function Home() {
       </section>
 
       {/* STATS */}
-      <section className="py-16 bg-white border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-gray-100">
+      <section className="border-y border-gray-100 bg-white py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 divide-y-2 divide-gray-100 lg:grid-cols-4 lg:divide-x-2 lg:divide-y-0">
             {stats.map((stat, i) => (
               <ScrollReveal key={stat.label} delay={i * 0.1}>
                 <motion.div
                   whileHover={{ scale: 1.03 }}
-                  className="group flex flex-col items-center text-center px-6 py-8 transition-all duration-300"
+                  className="group flex flex-col items-center px-6 py-8 text-center transition-all duration-300"
                 >
                   {/* Icône */}
-                  <div className="w-14 h-14 rounded-2xl bg-ltb-blue/8 flex items-center justify-center mb-5 group-hover:bg-ltb-blue transition-colors duration-300">
+                  <div className="bg-ltb-blue/8 mb-5 flex h-14 w-14 items-center justify-center rounded-2xl transition-colors duration-300 group-hover:bg-ltb-blue">
                     <stat.icon
                       size={24}
                       strokeWidth={1.8}
-                      className="text-ltb-blue group-hover:text-white transition-colors duration-300"
+                      className="text-ltb-blue transition-colors duration-300 group-hover:text-white"
                     />
                   </div>
 
                   {/* Nombre */}
-                  <div className="font-heading text-5xl sm:text-6xl font-bold text-gray-900 leading-none mb-2 tracking-tight">
+                  <div className="mb-2 font-heading text-5xl font-bold leading-none tracking-tight text-gray-900 sm:text-6xl">
                     <CountUp end={stat.value} suffix={stat.suffix} />
                   </div>
 
                   {/* Trait accent */}
-                  <div className="w-8 h-0.5 rounded-full bg-ltb-blue mb-3 group-hover:w-12 transition-all duration-300" />
+                  <div className="mb-3 h-0.5 w-8 rounded-full bg-ltb-blue transition-all duration-300 group-hover:w-12" />
 
                   {/* Label */}
-                  <p className="text-sm text-gray-500 font-medium">{stat.label}</p>
+                  <p className="text-sm font-medium text-gray-500">{stat.label}</p>
                 </motion.div>
               </ScrollReveal>
             ))}
@@ -366,35 +378,35 @@ export default function Home() {
       </section>
 
       {/* FEATURE — Klim image + benefits */}
-      <section className="py-24 bg-ltb-cream overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
-
+      <section className="overflow-hidden bg-ltb-cream py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 xl:gap-20">
             {/* Colonne gauche — Texte */}
             <ScrollReveal>
               <div>
                 {/* Badge */}
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-ltb-blue/10 rounded-full text-ltb-blue text-sm font-semibold mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-ltb-blue" />
+                <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-ltb-blue/10 px-4 py-1.5 text-sm font-semibold text-ltb-blue">
+                  <span className="h-1.5 w-1.5 rounded-full bg-ltb-blue" />
                   Notre engagement
                 </span>
 
                 {/* Titre */}
-                <h2 className="font-heading text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
+                <h2 className="mb-4 font-heading text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
                   Votre projet mérite{" "}
                   <span className="relative">
-                    <span className="text-ltb-blue">ce qu'il y a</span>
+                    <span className="text-ltb-blue">ce qu&apos;il y a</span>
                     <br />
                     <span className="text-ltb-blue">de mieux.</span>
                   </span>
                 </h2>
 
-                <p className="text-gray-500 text-base leading-relaxed mb-10 max-w-md">
-                  Depuis plus de 7 ans, nous accompagnons architectes, entrepreneurs et particuliers avec des matériaux fiables et un service à la hauteur de leurs ambitions.
+                <p className="mb-10 max-w-md text-base leading-relaxed text-gray-500">
+                  Depuis plus de 7 ans, nous accompagnons architectes, entrepreneurs et particuliers
+                  avec des matériaux fiables et un service à la hauteur de leurs ambitions.
                 </p>
 
                 {/* Feature items — style pill cards */}
-                <div className="space-y-4 mb-10">
+                <div className="mb-10 space-y-4">
                   {[
                     {
                       text: "Des briques certifiées, conçues pour résister aux conditions climatiques du Togo.",
@@ -412,12 +424,12 @@ export default function Home() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: i * 0.12 }}
-                      className="flex items-start gap-4 bg-white rounded-2xl px-5 py-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-ltb-blue/20 transition-all duration-300"
+                      className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-white px-5 py-4 shadow-sm transition-all duration-300 hover:border-ltb-blue/20 hover:shadow-md"
                     >
-                      <div className="w-8 h-8 rounded-full bg-ltb-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-ltb-blue/10">
                         <CheckCircle2 size={16} className="text-ltb-blue" />
                       </div>
-                      <p className="text-gray-700 text-sm leading-relaxed">{item.text}</p>
+                      <p className="text-sm leading-relaxed text-gray-700">{item.text}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -425,10 +437,13 @@ export default function Home() {
                 {/* CTA */}
                 <Link
                   href="/contact/"
-                  className="group inline-flex items-center gap-2 px-8 py-4 bg-ltb-blue text-white rounded-full font-semibold text-sm hover:bg-[#055a8e] transition-all duration-300 hover:scale-105 shadow-lg shadow-ltb-blue/25"
+                  className="group inline-flex items-center gap-2 rounded-full bg-ltb-blue px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-ltb-blue/25 transition-all duration-300 hover:scale-105 hover:bg-[#055a8e]"
                 >
                   Demander un devis gratuit
-                  <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight
+                    size={18}
+                    className="transition-transform group-hover:translate-x-1"
+                  />
                 </Link>
               </div>
             </ScrollReveal>
@@ -437,15 +452,16 @@ export default function Home() {
             <ScrollReveal delay={0.2}>
               <div className="relative">
                 {/* Cadre décoratif derrière l'image */}
-                <div className="hidden sm:block absolute -bottom-5 -right-5 w-full h-full rounded-3xl bg-ltb-blue/10 -z-10" />
-                <div className="hidden sm:block absolute -top-5 -left-5 w-24 h-24 rounded-2xl bg-ltb-brick/15 -z-10" />
+                <div className="absolute -bottom-5 -right-5 -z-10 hidden h-full w-full rounded-3xl bg-ltb-blue/10 sm:block" />
+                <div className="absolute -left-5 -top-5 -z-10 hidden h-24 w-24 rounded-2xl bg-ltb-brick/15 sm:block" />
 
                 {/* Image principale */}
-                <div className="rounded-3xl overflow-hidden shadow-2xl shadow-black/15">
-                  <img
+                <div className="relative h-[480px] overflow-hidden rounded-3xl shadow-2xl shadow-black/15">
+                  <Image
                     src="/images/klim-musalimov-rJPwYtWcMxw-unsplash.jpg"
                     alt="Production de briques Lomé Turque Brique"
-                    className="w-full h-[480px] object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </div>
 
@@ -455,51 +471,62 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.4 }}
-                  className="absolute -bottom-5 left-6 bg-white rounded-2xl shadow-xl px-5 py-4 flex items-center gap-4 border border-gray-100"
+                  className="absolute -bottom-5 left-6 flex items-center gap-4 rounded-2xl border border-gray-100 bg-white px-5 py-4 shadow-xl"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-ltb-blue flex items-center justify-center flex-shrink-0">
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-ltb-blue">
                     <HardHat size={22} className="text-white" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <p className="font-heading font-bold text-gray-900 text-xl leading-none">200+</p>
-                    <p className="text-gray-500 text-xs mt-0.5">Chantiers livrés</p>
+                    <p className="font-heading text-xl font-bold leading-none text-gray-900">
+                      200+
+                    </p>
+                    <p className="mt-0.5 text-xs text-gray-500">Chantiers livrés</p>
                   </div>
                 </motion.div>
               </div>
             </ScrollReveal>
-
           </div>
         </div>
       </section>
 
       {/* QUALITIES */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
+      <section className="overflow-hidden bg-white py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-ltb-blue/8 rounded-full text-ltb-blue text-sm font-semibold mb-5">
-                <span className="w-1.5 h-1.5 rounded-full bg-ltb-blue" />
+            <div className="mb-16 text-center">
+              <span className="bg-ltb-blue/8 mb-5 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold text-ltb-blue">
+                <span className="h-1.5 w-1.5 rounded-full bg-ltb-blue" />
                 Nos atouts
               </span>
-              <h2 className="font-heading text-4xl sm:text-5xl font-bold text-gray-900 mt-2 mb-4">
+              <h2 className="mb-4 mt-2 font-heading text-4xl font-bold text-gray-900 sm:text-5xl">
                 Ce qui rend nos briques{" "}
                 <span className="relative inline-block">
                   <span className="text-ltb-blue">uniques</span>
-                  <svg className="absolute -bottom-1 left-0 w-full" height="6" viewBox="0 0 100 6" preserveAspectRatio="none">
-                    <path d="M0 5 Q25 0 50 5 Q75 0 100 5" stroke="#C4622D" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+                  <svg
+                    className="absolute -bottom-1 left-0 w-full"
+                    height="6"
+                    viewBox="0 0 100 6"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M0 5 Q25 0 50 5 Q75 0 100 5"
+                      stroke="#C4622D"
+                      strokeWidth="2.5"
+                      fill="none"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </span>
               </h2>
-              <p className="text-gray-400 max-w-xl mx-auto text-lg leading-relaxed">
+              <p className="mx-auto max-w-xl text-lg leading-relaxed text-gray-400">
                 Des matériaux de construction conçus pour durer et embellir vos projets.
               </p>
             </div>
           </ScrollReveal>
 
           {/* Cards split-top */}
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid gap-6 md:grid-cols-3">
             {qualities.map((quality, i) => {
               const themes = [
                 {
@@ -523,47 +550,45 @@ export default function Home() {
                 <ScrollReveal key={quality.title} delay={i * 0.15}>
                   <motion.div
                     whileHover={{ y: -10 }}
-                    className="group rounded-3xl overflow-hidden shadow-md hover:shadow-2xl hover:shadow-black/12 transition-all duration-500"
+                    className="hover:shadow-black/12 group overflow-hidden rounded-3xl shadow-md transition-all duration-500 hover:shadow-2xl"
                   >
                     {/* Zone colorée haute */}
                     <div
-                      className="relative h-52 flex items-center justify-center overflow-hidden"
+                      className="relative flex h-52 items-center justify-center overflow-hidden"
                       style={{ background: theme.gradient }}
                     >
                       {/* Cercles décoratifs */}
-                      <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10" />
-                      <div className="absolute -bottom-6 -left-6 w-28 h-28 rounded-full bg-white/10" />
-                      <div className="absolute top-4 left-5 w-8 h-8 rounded-full bg-white/10" />
+                      <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" />
+                      <div className="absolute -bottom-6 -left-6 h-28 w-28 rounded-full bg-white/10" />
+                      <div className="absolute left-5 top-4 h-8 w-8 rounded-full bg-white/10" />
 
                       {/* Numéro décoratif en fond */}
-                      <span className="absolute bottom-3 right-5 font-heading font-bold text-7xl leading-none text-white/10 select-none">
+                      <span className="absolute bottom-3 right-5 select-none font-heading text-7xl font-bold leading-none text-white/10">
                         {String(i + 1).padStart(2, "0")}
                       </span>
 
                       {/* Icône centrale avec effet verre */}
                       <motion.div
-                        className="relative z-10 w-22 h-22 flex items-center justify-center"
+                        className="w-22 h-22 relative z-10 flex items-center justify-center"
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         transition={{ type: "spring", stiffness: 300 }}
                       >
-                        <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg ring-1 ring-white/30">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/20 shadow-lg ring-1 ring-white/30 backdrop-blur-sm">
                           <quality.icon size={38} strokeWidth={1.5} className="text-white" />
                         </div>
                       </motion.div>
                     </div>
 
                     {/* Zone blanche basse */}
-                    <div className="bg-white px-7 py-6 border-x border-b border-gray-100 rounded-b-3xl">
+                    <div className="rounded-b-3xl border-x border-b border-gray-100 bg-white px-7 py-6">
                       <div
-                        className="inline-block w-8 h-1 rounded-full mb-4"
+                        className="mb-4 inline-block h-1 w-8 rounded-full"
                         style={{ background: theme.gradient }}
                       />
-                      <h3 className="font-heading text-xl font-bold text-gray-900 mb-2">
+                      <h3 className="mb-2 font-heading text-xl font-bold text-gray-900">
                         {quality.title}
                       </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed">
-                        {quality.description}
-                      </p>
+                      <p className="text-sm leading-relaxed text-gray-500">{quality.description}</p>
                     </div>
                   </motion.div>
                 </ScrollReveal>
@@ -574,55 +599,60 @@ export default function Home() {
       </section>
 
       {/* PRODUCTS */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4">
+            <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
               <div>
-                <span className="text-ltb-blue font-semibold text-sm uppercase tracking-widest">Catalogue</span>
-                <h2 className="font-heading text-4xl sm:text-5xl font-bold mt-3">
+                <span className="text-sm font-semibold uppercase tracking-widest text-ltb-blue">
+                  Catalogue
+                </span>
+                <h2 className="mt-3 font-heading text-4xl font-bold sm:text-5xl">
                   Nos Produits Populaires
                 </h2>
               </div>
               <Link
                 href="/produits/"
-                className="group inline-flex items-center gap-2 text-ltb-blue font-semibold hover:gap-3 transition-all duration-300"
+                className="group inline-flex items-center gap-2 font-semibold text-ltb-blue transition-all duration-300 hover:gap-3"
               >
                 Voir tous les produits
-                <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <ChevronRight
+                  size={20}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </Link>
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-8 md:grid-cols-3">
             {products.map((product, i) => (
               <ScrollReveal key={product.name} delay={i * 0.15}>
                 <motion.div
                   whileHover={{ y: -8 }}
-                  className="group bg-white rounded-2xl overflow-hidden shadow-lg shadow-black/5 hover:shadow-2xl hover:shadow-ltb-blue/20 transition-all duration-500"
+                  className="group overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/5 transition-all duration-500 hover:shadow-2xl hover:shadow-ltb-blue/20"
                 >
                   <div className="relative h-64 overflow-hidden">
-                    <img
+                    <Image
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      loading="lazy"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-ltb-blue text-white text-xs font-semibold rounded-full">
+                    <div className="absolute left-4 top-4">
+                      <span className="rounded-full bg-ltb-blue px-3 py-1 text-xs font-semibold text-white">
                         {product.tag}
                       </span>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   </div>
                   <div className="p-6">
-                    <h3 className="font-heading text-xl font-bold mb-2 group-hover:text-ltb-blue transition-colors">
+                    <h3 className="mb-2 font-heading text-xl font-bold transition-colors group-hover:text-ltb-blue">
                       {product.name}
                     </h3>
-                    <p className="text-ltb-light text-sm mb-4">{product.description}</p>
+                    <p className="mb-4 text-sm text-ltb-light">{product.description}</p>
                     <Link
                       href="/produits/"
-                      className="inline-flex items-center gap-1 text-ltb-blue font-medium text-sm hover:gap-2 transition-all duration-300"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-ltb-blue transition-all duration-300 hover:gap-2"
                     >
                       En savoir plus <ChevronRight size={16} />
                     </Link>
@@ -635,72 +665,86 @@ export default function Home() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-20 bg-[#1a1a1a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#1a1a1a] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-8 h-0.5 bg-ltb-blue" />
-                <span className="text-ltb-blue font-semibold text-sm uppercase tracking-widest">Témoignages</span>
-                <div className="w-8 h-0.5 bg-ltb-blue" />
+            <div className="mb-16 text-center">
+              <div className="mb-4 flex items-center justify-center gap-3">
+                <div className="h-0.5 w-8 bg-ltb-blue" />
+                <span className="text-sm font-semibold uppercase tracking-widest text-ltb-blue">
+                  Témoignages
+                </span>
+                <div className="h-0.5 w-8 bg-ltb-blue" />
               </div>
-              <h2 className="font-heading text-4xl sm:text-5xl font-bold mt-3 text-white">
-                Ce que nos <span className="text-white/50 font-normal italic">clients</span> disent de nous
+              <h2 className="mt-3 font-heading text-4xl font-bold text-white sm:text-5xl">
+                Ce que nos <span className="font-normal italic text-white/50">clients</span> disent
+                de nous
               </h2>
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {testimonialsLoading
               ? [...Array(3)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-lg animate-pulse">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-14 h-14 rounded-full bg-gray-200 flex-shrink-0" />
+                  <div
+                    key={i}
+                    className="animate-pulse rounded-2xl border border-gray-100 bg-white p-6 shadow-lg"
+                  >
+                    <div className="mb-4 flex items-start gap-4">
+                      <div className="h-14 w-14 flex-shrink-0 rounded-full bg-gray-200" />
                       <div className="flex-1 space-y-2">
-                        <div className="h-3 bg-gray-200 rounded w-24" />
-                        <div className="h-3 bg-gray-200 rounded w-16" />
+                        <div className="h-3 w-24 rounded bg-gray-200" />
+                        <div className="h-3 w-16 rounded bg-gray-200" />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <div className="h-3 bg-gray-200 rounded w-full" />
-                      <div className="h-3 bg-gray-200 rounded w-5/6" />
-                      <div className="h-3 bg-gray-200 rounded w-4/6" />
+                      <div className="h-3 w-full rounded bg-gray-200" />
+                      <div className="h-3 w-5/6 rounded bg-gray-200" />
+                      <div className="h-3 w-4/6 rounded bg-gray-200" />
                     </div>
                   </div>
                 ))
               : testimonials.map((t) => (
-              <motion.div
-                key={t.id}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl p-6 border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-full bg-ltb-blue/10 flex items-center justify-center text-ltb-blue font-bold text-lg flex-shrink-0">
-                    {t.name[0]}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-gray-900 text-sm">{t.name}</h4>
-                    <p className="text-gray-500 text-xs">{t.role}</p>
-                  </div>
-                  <div className="flex items-center gap-0.5 flex-shrink-0">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={14}
-                        className={i < t.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200 fill-gray-200"}
-                      />
-                    ))}
-                    <span className="text-gray-900 font-semibold text-xs ml-1">{t.rating}.0</span>
-                  </div>
-                  <div className="text-ltb-blue text-3xl leading-none font-serif ml-1">&ldquo;</div>
-                </div>
-                <p className="text-gray-600 leading-relaxed text-sm">{t.text}</p>
-              </motion.div>
-            ))}
+                  <motion.div
+                    key={t.id}
+                    whileHover={{ y: -4 }}
+                    className="rounded-2xl border border-gray-100 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl"
+                  >
+                    <div className="mb-4 flex items-start gap-4">
+                      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-ltb-blue/10 text-lg font-bold text-ltb-blue">
+                        {t.name[0]}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-sm font-bold text-gray-900">{t.name}</h4>
+                        <p className="text-xs text-gray-500">{t.role}</p>
+                      </div>
+                      <div className="flex flex-shrink-0 items-center gap-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={14}
+                            className={
+                              i < t.rating
+                                ? "fill-yellow-400 text-yellow-400"
+                                : "fill-gray-200 text-gray-200"
+                            }
+                          />
+                        ))}
+                        <span className="ml-1 text-xs font-semibold text-gray-900">
+                          {t.rating}.0
+                        </span>
+                      </div>
+                      <div className="ml-1 font-serif text-3xl leading-none text-ltb-blue">
+                        &ldquo;
+                      </div>
+                    </div>
+                    <p className="text-sm leading-relaxed text-gray-600">{t.text}</p>
+                  </motion.div>
+                ))}
           </div>
 
           {/* Pagination bars */}
-          <div className="flex justify-center gap-2 mt-10">
+          <div className="mt-10 flex justify-center gap-2">
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
@@ -713,14 +757,14 @@ export default function Home() {
 
           {/* Bouton ajouter témoignage */}
           <ScrollReveal>
-            <div className="text-center mt-12">
+            <div className="mt-12 text-center">
               <button
                 onClick={() => {
                   setShowTestimonialModal(true);
                   setTestimonialSubmitted(false);
                   setTestimonialForm({ name: "", role: "", rating: 5, text: "" });
                 }}
-                className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-50 transition-all duration-300 hover:scale-105 shadow-xl"
+                className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-gray-900 shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gray-50"
               >
                 <MessageSquarePlus size={20} className="text-ltb-blue" />
                 <span className="text-ltb-blue">Ajouter votre témoignage</span>
@@ -731,17 +775,19 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-8 h-0.5 bg-ltb-blue" />
-                <span className="text-ltb-blue font-semibold text-sm uppercase tracking-widest">FAQs</span>
+            <div className="mb-12 text-center">
+              <div className="mb-4 flex items-center justify-center gap-3">
+                <div className="h-0.5 w-8 bg-ltb-blue" />
+                <span className="text-sm font-semibold uppercase tracking-widest text-ltb-blue">
+                  FAQs
+                </span>
               </div>
-              <h2 className="font-heading text-4xl sm:text-5xl font-bold mt-3">
+              <h2 className="mt-3 font-heading text-4xl font-bold sm:text-5xl">
                 Des <span className="text-gray-900">questions ?</span>{" "}
-                <span className="text-gray-400 font-normal italic">Consultez ici.</span>
+                <span className="font-normal italic text-gray-400">Consultez ici.</span>
               </h2>
             </div>
           </ScrollReveal>
@@ -751,25 +797,25 @@ export default function Home() {
               <motion.div
                 key={i}
                 initial={false}
-                className={`rounded-xl overflow-hidden transition-colors duration-300 ${
+                className={`overflow-hidden rounded-xl transition-colors duration-300 ${
                   openFaq === i ? "bg-ltb-blue" : "bg-gray-50"
                 }`}
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left"
+                  className="flex w-full items-center justify-between p-5 text-left"
                 >
                   <span
-                    className={`font-medium text-sm pr-4 ${
+                    className={`pr-4 text-sm font-medium ${
                       openFaq === i ? "text-white" : "text-gray-900"
                     }`}
                   >
                     {faq.question}
                   </span>
                   {openFaq === i ? (
-                    <Minus size={20} className="text-white flex-shrink-0" />
+                    <Minus size={20} className="flex-shrink-0 text-white" />
                   ) : (
-                    <Plus size={20} className="text-gray-400 flex-shrink-0" />
+                    <Plus size={20} className="flex-shrink-0 text-gray-400" />
                   )}
                 </button>
                 <AnimatePresence initial={false}>
@@ -780,7 +826,7 @@ export default function Home() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.25 }}
                     >
-                      <p className="px-5 pb-5 text-white/90 text-sm leading-relaxed">
+                      <p className="px-5 pb-5 text-sm leading-relaxed text-white/90">
                         {faq.answer}
                       </p>
                     </motion.div>
@@ -793,20 +839,20 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-black relative overflow-hidden">
+      <section className="relative overflow-hidden bg-black py-24">
         <div className="absolute inset-0 bg-gradient-to-r from-ltb-blue/20 to-transparent" />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <ScrollReveal>
-            <h2 className="font-heading text-4xl sm:text-5xl font-bold text-white mb-6">
+            <h2 className="mb-6 font-heading text-4xl font-bold text-white sm:text-5xl">
               Prêt à commencer votre projet ?
             </h2>
-            <p className="text-white/70 text-lg mb-10 max-w-2xl mx-auto">
+            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/70">
               Contactez-nous dès aujourd&apos;hui pour obtenir un devis gratuit et découvrir comment
               nos briques de qualité peuvent améliorer votre construction.
             </p>
             <Link
               href="/contact/"
-              className="inline-flex items-center gap-2 px-10 py-5 bg-ltb-blue text-white rounded-full font-semibold text-lg hover:bg-ltb-blue/90 transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg"
+              className="inline-flex items-center gap-2 rounded-full bg-ltb-blue px-10 py-5 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-ltb-blue/90 hover:shadow-2xl"
             >
               Demander un devis
               <ChevronRight size={20} />
@@ -821,23 +867,23 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
             onClick={() => setShowTestimonialModal(false)}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden"
+              className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-gradient-to-br from-ltb-blue to-[#044d7a] p-6 flex items-center justify-between">
+              <div className="flex items-center justify-between bg-gradient-to-br from-ltb-blue to-[#044d7a] p-6">
                 <h3 className="font-heading text-xl font-bold text-white">
                   {testimonialSubmitted ? "Merci !" : "Votre témoignage"}
                 </h3>
                 <button
                   onClick={() => setShowTestimonialModal(false)}
-                  className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
                   <X size={18} />
                 </button>
@@ -848,12 +894,12 @@ export default function Home() {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center py-8"
+                    className="py-8 text-center"
                   >
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
                       <CheckCircle2 size={32} className="text-green-600" />
                     </div>
-                    <h4 className="font-heading text-2xl font-bold text-gray-900 mb-2">
+                    <h4 className="mb-2 font-heading text-2xl font-bold text-gray-900">
                       Commentaire envoyé !
                     </h4>
                     <p className="text-gray-500">
@@ -861,7 +907,7 @@ export default function Home() {
                     </p>
                     <button
                       onClick={() => setShowTestimonialModal(false)}
-                      className="mt-6 px-8 py-3 bg-ltb-blue text-white rounded-full font-medium hover:bg-ltb-blue/90 transition-colors"
+                      className="mt-6 rounded-full bg-ltb-blue px-8 py-3 font-medium text-white transition-colors hover:bg-ltb-blue/90"
                     >
                       Fermer
                     </button>
@@ -888,8 +934,10 @@ export default function Home() {
                           throw new Error(data.error || "Erreur lors de l'envoi");
                         }
                         setTestimonialSubmitted(true);
-                      } catch (err: any) {
-                        setSubmitError(err.message || "Une erreur est survenue");
+                      } catch (err: unknown) {
+                        setSubmitError(
+                          err instanceof Error ? err.message : "Une erreur est survenue"
+                        );
                       } finally {
                         setSubmitting(false);
                       }
@@ -897,7 +945,7 @@ export default function Home() {
                     className="space-y-5"
                   >
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      <label className="mb-1.5 block text-sm font-medium text-gray-700">
                         Votre nom
                       </label>
                       <div className="relative">
@@ -909,14 +957,14 @@ export default function Home() {
                           onChange={(e) =>
                             setTestimonialForm({ ...testimonialForm, name: e.target.value })
                           }
-                          className="w-full pl-10 pr-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-ltb-blue focus:ring-2 focus:ring-ltb-blue/20 outline-none transition-all text-sm"
+                          className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-ltb-blue focus:ring-2 focus:ring-ltb-blue/20"
                           placeholder="Ex: Jean K."
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      <label className="mb-1.5 block text-sm font-medium text-gray-700">
                         Entreprise / Rôle
                       </label>
                       <div className="relative">
@@ -928,32 +976,28 @@ export default function Home() {
                           onChange={(e) =>
                             setTestimonialForm({ ...testimonialForm, role: e.target.value })
                           }
-                          className="w-full pl-10 pr-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-ltb-blue focus:ring-2 focus:ring-ltb-blue/20 outline-none transition-all text-sm"
+                          className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm outline-none transition-all focus:border-ltb-blue focus:ring-2 focus:ring-ltb-blue/20"
                           placeholder="Ex: Architecte / Construction Moderne SA"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                        Note
-                      </label>
+                      <label className="mb-1.5 block text-sm font-medium text-gray-700">Note</label>
                       <div className="flex gap-2">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <button
                             key={star}
                             type="button"
-                            onClick={() =>
-                              setTestimonialForm({ ...testimonialForm, rating: star })
-                            }
-                            className="focus:outline-none transition-transform hover:scale-110"
+                            onClick={() => setTestimonialForm({ ...testimonialForm, rating: star })}
+                            className="transition-transform hover:scale-110 focus:outline-none"
                           >
                             <Star
                               size={24}
                               className={
                                 star <= testimonialForm.rating
-                                  ? "text-yellow-400 fill-yellow-400"
-                                  : "text-gray-200 fill-gray-200"
+                                  ? "fill-yellow-400 text-yellow-400"
+                                  : "fill-gray-200 text-gray-200"
                               }
                             />
                           </button>
@@ -962,7 +1006,7 @@ export default function Home() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                      <label className="mb-1.5 block text-sm font-medium text-gray-700">
                         Votre commentaire
                       </label>
                       <textarea
@@ -972,21 +1016,21 @@ export default function Home() {
                         onChange={(e) =>
                           setTestimonialForm({ ...testimonialForm, text: e.target.value })
                         }
-                        className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-200 focus:border-ltb-blue focus:ring-2 focus:ring-ltb-blue/20 outline-none transition-all text-sm resize-none"
+                        className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition-all focus:border-ltb-blue focus:ring-2 focus:ring-ltb-blue/20"
                         placeholder="Partagez votre expérience avec nos produits..."
                       />
                     </div>
 
                     {submitError && (
-                      <p className="text-red-500 text-sm text-center">{submitError}</p>
+                      <p className="text-center text-sm text-red-500">{submitError}</p>
                     )}
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-ltb-blue text-white rounded-xl font-semibold hover:bg-[#055a8e] transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-ltb-blue/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-ltb-blue px-6 py-4 font-semibold text-white shadow-lg shadow-ltb-blue/20 transition-all duration-300 hover:scale-[1.02] hover:bg-[#055a8e] disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {submitting ? (
-                        <span className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                       ) : (
                         <Send size={18} />
                       )}

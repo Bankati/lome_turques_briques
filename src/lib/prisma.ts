@@ -15,7 +15,7 @@ function getPrismaClient(): PrismaClient {
 const handler: ProxyHandler<PrismaClient> = {
   get(_, prop) {
     const client = getPrismaClient();
-    return (client as any)[prop];
+    return Reflect.get(client, prop, client);
   },
 };
 

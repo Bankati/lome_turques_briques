@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/", label: "Accueil" },
@@ -30,47 +31,43 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-lg py-3"
-            : "bg-transparent py-5"
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
+          scrolled ? "bg-white/95 py-3 shadow-lg backdrop-blur-md" : "bg-transparent py-5"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-white">
-                <img
-                  src="/images/logo.jpg"
-                  alt="LTB Logo"
-                  className="w-full h-full object-contain"
-                />
+            <Link href="/" className="group flex items-center gap-3">
+              <div className="relative h-12 w-12 overflow-hidden rounded-lg bg-white">
+                <Image src="/images/logo.jpg" alt="LTB Logo" fill className="object-contain" />
               </div>
-              <span className={`font-heading font-bold text-lg hidden sm:block transition-colors duration-300 ${
-                scrolled ? "text-black" : "text-white"
-              }`}>
+              <span
+                className={`hidden font-heading text-lg font-bold transition-colors duration-300 sm:block ${
+                  scrolled ? "text-black" : "text-white"
+                }`}
+              >
                 Lomé Turque Brique
               </span>
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden items-center gap-8 md:flex">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative font-medium text-sm tracking-wide transition-colors duration-300 group ${
+                  className={`group relative text-sm font-medium tracking-wide transition-colors duration-300 ${
                     scrolled ? "text-black" : "text-white"
                   }`}
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-ltb-blue transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-ltb-blue transition-all duration-300 group-hover:w-full" />
                 </Link>
               ))}
               <Link
                 href="/contact/"
-                className={`px-5 py-2 rounded-full font-medium text-sm transition-all duration-300 ${
+                className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
                   scrolled
                     ? "bg-ltb-blue text-white hover:bg-ltb-blue/90"
                     : "bg-white text-ltb-blue hover:bg-white/90"
@@ -83,7 +80,7 @@ export default function Navbar() {
             {/* Mobile Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`md:hidden p-2 rounded-lg transition-colors ${
+              className={`rounded-lg p-2 transition-colors md:hidden ${
                 scrolled ? "text-black" : "text-white"
               }`}
             >
@@ -101,7 +98,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-ltb-blue pt-24 px-6"
+            className="fixed inset-0 z-40 bg-ltb-blue px-6 pt-24"
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link, i) => (
@@ -114,7 +111,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-white text-2xl font-heading font-semibold block py-2 border-b border-white/20"
+                    className="block border-b border-white/20 py-2 font-heading text-2xl font-semibold text-white"
                   >
                     {link.label}
                   </Link>
@@ -123,7 +120,7 @@ export default function Navbar() {
               <Link
                 href="/contact/"
                 onClick={() => setIsOpen(false)}
-                className="mt-4 bg-white text-ltb-blue px-6 py-3 rounded-full text-center font-semibold"
+                className="mt-4 rounded-full bg-white px-6 py-3 text-center font-semibold text-ltb-blue"
               >
                 Demander un devis
               </Link>

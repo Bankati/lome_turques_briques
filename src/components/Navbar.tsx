@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
@@ -13,116 +14,229 @@ const navLinks = [
   { href: "/contact/", label: "Contact" },
 ];
 
+function isLinkActive(href: string, pathname: string) {
+  if (href === "/") return pathname === "/";
+  const clean = href.replace(/\/$/, "");
+  return pathname === href || pathname === clean || pathname.startsWith(clean + "/");
+}
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
     <>
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-white/95 py-3 shadow-lg backdrop-blur-md" : "bg-transparent py-5"
+          scrolled
+            ? "bg-white/98 py-3 shadow-[0_1px_0_rgba(0,0,0,0.08)] backdrop-blur-md"
+            : "bg-transparent py-5"
         }`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="group flex items-center gap-3">
-              <div className="relative h-12 w-12 overflow-hidden rounded-lg bg-white">
+              <div className="relative h-10 w-10 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-300 group-hover:scale-105">
                 <Image src="/images/logo.jpg" alt="LTB Logo" fill className="object-contain" />
               </div>
-              <span
-                className={`hidden font-heading text-lg font-bold transition-colors duration-300 sm:block ${
-                  scrolled ? "text-black" : "text-white"
-                }`}
-              >
-                Lomé Turque Brique
-              </span>
+              <div className="hidden sm:block">
+                <span
+                  className={`block font-heading text-base font-bold leading-tight transition-colors duration-300 ${
+                    scrolled ? "text-gray-900" : "text-white"
+                  }`}
+                >
+                  Lomé Turque Brique
+                </span>
+                <span
+                  className={`block text-[11px] transition-colors duration-300 ${
+                    scrolled ? "text-gray-400" : "text-white/60"
+                  }`}
+                >
+                  Matériaux de construction
+                </span>
+              </div>
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden items-center gap-8 md:flex">
-              {navLinks.map((link) => (
+            <div className="hidden items-center gap-1 md:flex">
+              {navLinks.map((link) => {
+                const active = isLinkActive(link.href, pathname ?? "");
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative rounded-lg px-4 py-2 text-sm font-medium tracking-wide transition-all duration-200 ${
+                      active
+                        ? scrolled
+                          ? "text-ltb-blue"
+                          : "text-white"
+                        : scrolled
+                          ? "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                          : "text-white/80 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {link.label}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-active-dot"
+                        className={`absolute bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full ${
+                          scrolled ? "bg-ltb-blue" : "bg-white"
+                        }`}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+              <div className="ml-2">
                 <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`group relative text-sm font-medium tracking-wide transition-colors duration-300 ${
-                    scrolled ? "text-black" : "text-white"
+                  href="/contact/"
+                  className={`group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                    scrolled
+                      ? "bg-ltb-blue text-white shadow-md shadow-ltb-blue/20 hover:bg-ltb-blue-hover"
+                      : "bg-white text-ltb-blue hover:bg-white/95"
                   }`}
                 >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-ltb-blue transition-all duration-300 group-hover:w-full" />
+                  Devis gratuit
+                  <ChevronRight
+                    size={14}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
                 </Link>
-              ))}
-              <Link
-                href="/contact/"
-                className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
-                  scrolled
-                    ? "bg-ltb-blue text-white hover:bg-ltb-blue/90"
-                    : "bg-white text-ltb-blue hover:bg-white/90"
-                }`}
-              >
-                Devis gratuit
-              </Link>
+              </div>
             </div>
 
             {/* Mobile Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`rounded-lg p-2 transition-colors md:hidden ${
-                scrolled ? "text-black" : "text-white"
+              className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200 md:hidden ${
+                scrolled
+                  ? "text-gray-900 hover:bg-gray-100"
+                  : "text-white hover:bg-white/10"
               }`}
+              aria-label="Toggle menu"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={isOpen ? "close" : "open"}
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  {isOpen ? <X size={22} /> : <Menu size={22} />}
+                </motion.div>
+              </AnimatePresence>
             </button>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile — backdrop */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-ltb-blue px-6 pt-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Mobile — side drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 320, damping: 32 }}
+            className="fixed bottom-0 right-0 top-0 z-40 flex w-80 flex-col bg-white shadow-2xl"
           >
-            <div className="flex flex-col gap-6">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="block border-b border-white/20 py-2 font-heading text-2xl font-semibold text-white"
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+            {/* Drawer header */}
+            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+              <Link
+                href="/"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-3"
+              >
+                <div className="relative h-9 w-9 overflow-hidden rounded-lg shadow-sm">
+                  <Image src="/images/logo.jpg" alt="LTB" fill className="object-contain" />
+                </div>
+                <span className="font-heading text-sm font-bold text-gray-900">
+                  Lomé Turque Brique
+                </span>
+              </Link>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Drawer links */}
+            <nav className="flex-1 px-4 py-6">
+              <div className="space-y-1">
+                {navLinks.map((link, i) => {
+                  const active = isLinkActive(link.href, pathname ?? "");
+                  return (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, x: 24 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.06, duration: 0.25 }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition-all ${
+                          active
+                            ? "bg-ltb-blue/10 text-ltb-blue"
+                            : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                        }`}
+                      >
+                        {link.label}
+                        <ChevronRight
+                          size={16}
+                          className={active ? "text-ltb-blue" : "text-gray-300"}
+                        />
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </nav>
+
+            {/* Drawer CTA */}
+            <div className="border-t border-gray-100 p-4">
               <Link
                 href="/contact/"
                 onClick={() => setIsOpen(false)}
-                className="mt-4 rounded-full bg-white px-6 py-3 text-center font-semibold text-ltb-blue"
+                className="flex items-center justify-center gap-2 rounded-xl bg-ltb-blue px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-ltb-blue/20 transition-all hover:bg-ltb-blue-hover"
               >
-                Demander un devis
+                Demander un devis gratuit
+                <ChevronRight size={16} />
               </Link>
             </div>
           </motion.div>

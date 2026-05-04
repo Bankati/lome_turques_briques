@@ -10,15 +10,20 @@ const config: Config = {
     extend: {
       colors: {
         ltb: {
+          // ── Palette officielle (logo) ──────────────────────────
           white: "#FFFFFF",
-          light: "#BBBEBE",
           black: "#000000",
-          gray: "#BEC0BF",
-          blue: "#0666A2",
-          brick: "#C4622D",
-          earth: "#7A3B1E",
-          sand: "#F5EBD8",
-          cream: "#FAF7F2",
+          blue: "#065A96",       // Bleu principal du logo
+          "blue-dark": "#044070", // Variante sombre (dégradés, sections)
+          "blue-hover": "#054f82", // Hover des boutons bleus
+          gray: "#D5D6D6",       // Gris clair (bordures, séparateurs)
+          light: "#BBBEBE",      // Gris moyen (texte secondaire)
+          cream: "#EDF0F0",      // Fond clair (sections alternées)
+          // ── Alias pour rétrocompatibilité ──────────────────────
+          // Toutes les anciens accents chauds sont remappés sur la palette
+          brick: "#065A96",      // → bleu (remplace l'orange)
+          earth: "#044070",      // → bleu foncé (remplace le brun)
+          sand: "#EDF0F0",       // → fond clair (remplace le sable)
         },
       },
       fontFamily: {
@@ -31,6 +36,8 @@ const config: Config = {
         "count-up": "countUp 2s ease-out forwards",
         float: "float 6s ease-in-out infinite",
         shimmer: "shimmer 2s linear infinite",
+        marquee: "marquee 40s linear infinite",
+        "marquee-reverse": "marqueeReverse 40s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -48,6 +55,14 @@ const config: Config = {
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        marqueeReverse: {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
         },
       },
     },

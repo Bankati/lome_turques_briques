@@ -142,7 +142,52 @@ const fallbackTestimonials: TestimonialData[] = [
     rating: 5,
     createdAt: new Date().toISOString(),
   },
+  {
+    id: "4",
+    text: "Très satisfait de la qualité des pavés. L'équipe a été réactive et professionnelle du devis à la livraison.",
+    name: "Kossi M.",
+    role: "Entrepreneur BTP",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "5",
+    text: "Les briques turques sont vraiment d'une autre qualité. Mon chantier a pu avancer vite grâce à leur ponctualité de livraison.",
+    name: "Afi D.",
+    role: "Particulier",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
 ];
+
+function TestimonialCard({ t }: { t: TestimonialData }) {
+  return (
+    <div className="w-[340px] flex-shrink-0 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+      <div className="mb-4 flex items-center gap-1">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            size={13}
+            className={i < t.rating ? "fill-amber-400 text-amber-400" : "fill-gray-100 text-gray-100"}
+          />
+        ))}
+        <span className="ml-1.5 text-xs font-semibold text-gray-400">{t.rating}.0</span>
+      </div>
+      <p className="mb-6 line-clamp-3 text-sm leading-relaxed text-gray-600">
+        &ldquo;{t.text}&rdquo;
+      </p>
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-ltb-blue text-sm font-bold text-white">
+          {t.name[0]}
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-gray-900">{t.name}</p>
+          <p className="text-xs text-gray-400">{t.role}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [currentHero, setCurrentHero] = useState(0);
@@ -160,14 +205,12 @@ export default function Home() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Load testimonials from API
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
         const res = await fetch("/api/testimonials/");
         if (!res.ok) throw new Error("Erreur de chargement");
         const data = await res.json();
-        // Use fallback if API returns empty or invalid data
         if (Array.isArray(data) && data.length > 0) {
           setTestimonials(data);
         } else {
@@ -193,10 +236,21 @@ export default function Home() {
   const prevHero = () =>
     setCurrentHero((prev) => (prev - 1 + heroImages.length) % heroImages.length);
 
+  const displayTestimonials =
+    testimonialsLoading || testimonials.length === 0
+      ? fallbackTestimonials
+      : testimonials;
+  const duplicated = [
+    ...displayTestimonials,
+    ...displayTestimonials,
+    ...displayTestimonials,
+    ...displayTestimonials,
+  ];
+
   return (
     <div>
-      {/* HERO */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      {/* ─── HERO ─── */}
+      <section className="relative flex min-h-screen items-center overflow-hidden">
         {/* Background slideshow */}
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
@@ -216,12 +270,11 @@ export default function Home() {
               />
             </motion.div>
           </AnimatePresence>
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-br from-ltb-blue/80 via-[#044d7a]/70 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-ltb-blue/80 via-ltb-blue-dark/70 to-black/80" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
         </div>
 
-        {/* Diagonal brick pattern overlay inspired by reference image */}
+        {/* Brick pattern overlay */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.03]">
           <svg width="100%" height="100%">
             <pattern
@@ -240,61 +293,94 @@ export default function Home() {
           </svg>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <span className="mb-6 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">
-              🇹🇬 La qualité turque au service du Togo
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mb-6 font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-7xl"
-          >
-            Bienvenue chez
-            <br />
-            <span className="text-white/90">Lomé Turque Brique</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mx-auto mb-10 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-lg lg:text-xl"
-          >
-            Nous produisons des briques solides et esthétiques pour vos constructions modernes.
-            Alliant le savoir-faire turque et les ressources locales.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col justify-center gap-4 sm:flex-row"
-          >
-            <Link
-              href="/contact/"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-ltb-blue shadow-lg transition-all duration-300 hover:scale-105 hover:bg-white/90 hover:shadow-xl"
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Text block — centered on mobile, left-aligned on desktop */}
+          <div className="text-center lg:max-w-[58%] lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Contactez-nous
-              <ChevronRight size={20} className="transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/produits/"
-              className="inline-flex items-center justify-center rounded-full border-2 border-white/40 bg-transparent px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-white/10"
+              <span className="mb-6 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/90 backdrop-blur-sm">
+                🇹🇬 La qualité turque au service du Togo
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mb-6 font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-7xl"
             >
-              Découvrir nos produits
-            </Link>
-          </motion.div>
+              Bienvenue chez
+              <br />
+              <span className="text-white/90">Lomé Turque Brique</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mx-auto mb-10 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-lg lg:mx-0 lg:text-xl"
+            >
+              Nous produisons des briques solides et esthétiques pour vos constructions modernes.
+              Alliant le savoir-faire turque et les ressources locales.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start"
+            >
+              <Link
+                href="/contact/"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-lg font-semibold text-ltb-blue shadow-lg transition-all duration-300 hover:scale-105 hover:bg-white/90 hover:shadow-xl"
+              >
+                Contactez-nous
+                <ChevronRight
+                  size={20}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </Link>
+              <Link
+                href="/produits/"
+                className="inline-flex items-center justify-center rounded-full border-2 border-white/40 bg-transparent px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-white/10"
+              >
+                Découvrir nos produits
+              </Link>
+            </motion.div>
+
+            {/* Social proof */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+              className="mt-10 flex items-center justify-center gap-4 lg:justify-start"
+            >
+              <div className="flex -space-x-2">
+                {[
+                  { initial: "K", color: "bg-ltb-blue" },
+                  { initial: "A", color: "bg-ltb-brick" },
+                  { initial: "S", color: "bg-emerald-500" },
+                  { initial: "E", color: "bg-amber-500" },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className={`flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/20 text-xs font-bold text-white ${item.color}`}
+                  >
+                    {item.initial}
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-white/70">
+                <span className="font-semibold text-white">200+</span> clients satisfaits
+              </p>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Hero navigation arrows */}
+        {/* Navigation arrows */}
         <div className="pointer-events-none absolute left-4 right-4 top-1/2 z-20 flex -translate-y-1/2 justify-between">
           <button
             onClick={prevHero}
@@ -310,14 +396,14 @@ export default function Home() {
           </button>
         </div>
 
-        {/* Hero dots indicator */}
+        {/* Dots indicator */}
         <div className="absolute bottom-24 left-1/2 z-20 flex -translate-x-1/2 gap-2">
           {heroImages.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentHero(i)}
-              className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-                i === currentHero ? "w-8 bg-white" : "bg-white/40 hover:bg-white/60"
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                i === currentHero ? "w-8 bg-white" : "w-2.5 bg-white/40 hover:bg-white/60"
               }`}
             />
           ))}
@@ -341,7 +427,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* STATS */}
+      {/* ─── STATS ─── */}
       <section className="border-y border-gray-100 bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 divide-y-2 divide-gray-100 lg:grid-cols-4 lg:divide-x-2 lg:divide-y-0">
@@ -351,24 +437,17 @@ export default function Home() {
                   whileHover={{ scale: 1.03 }}
                   className="group flex flex-col items-center px-6 py-8 text-center transition-all duration-300"
                 >
-                  {/* Icône */}
-                  <div className="bg-ltb-blue/8 mb-5 flex h-14 w-14 items-center justify-center rounded-2xl transition-colors duration-300 group-hover:bg-ltb-blue">
+                  <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-ltb-blue/[0.08] transition-colors duration-300 group-hover:bg-ltb-blue">
                     <stat.icon
                       size={24}
                       strokeWidth={1.8}
                       className="text-ltb-blue transition-colors duration-300 group-hover:text-white"
                     />
                   </div>
-
-                  {/* Nombre */}
                   <div className="mb-2 font-heading text-5xl font-bold leading-none tracking-tight text-gray-900 sm:text-6xl">
                     <CountUp end={stat.value} suffix={stat.suffix} />
                   </div>
-
-                  {/* Trait accent */}
                   <div className="mb-3 h-0.5 w-8 rounded-full bg-ltb-blue transition-all duration-300 group-hover:w-12" />
-
-                  {/* Label */}
                   <p className="text-sm font-medium text-gray-500">{stat.label}</p>
                 </motion.div>
               </ScrollReveal>
@@ -377,20 +456,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURE — Klim image + benefits */}
+      {/* ─── FEATURE — Image + avantages ─── */}
       <section className="overflow-hidden bg-ltb-cream py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 xl:gap-20">
-            {/* Colonne gauche — Texte */}
             <ScrollReveal>
               <div>
-                {/* Badge */}
                 <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-ltb-blue/10 px-4 py-1.5 text-sm font-semibold text-ltb-blue">
                   <span className="h-1.5 w-1.5 rounded-full bg-ltb-blue" />
                   Notre engagement
                 </span>
-
-                {/* Titre */}
                 <h2 className="mb-4 font-heading text-4xl font-bold leading-tight text-gray-900 sm:text-5xl">
                   Votre projet mérite{" "}
                   <span className="relative">
@@ -399,13 +474,10 @@ export default function Home() {
                     <span className="text-ltb-blue">de mieux.</span>
                   </span>
                 </h2>
-
                 <p className="mb-10 max-w-md text-base leading-relaxed text-gray-500">
                   Depuis plus de 7 ans, nous accompagnons architectes, entrepreneurs et particuliers
                   avec des matériaux fiables et un service à la hauteur de leurs ambitions.
                 </p>
-
-                {/* Feature items — style pill cards */}
                 <div className="mb-10 space-y-4">
                   {[
                     {
@@ -433,11 +505,9 @@ export default function Home() {
                     </motion.div>
                   ))}
                 </div>
-
-                {/* CTA */}
                 <Link
                   href="/contact/"
-                  className="group inline-flex items-center gap-2 rounded-full bg-ltb-blue px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-ltb-blue/25 transition-all duration-300 hover:scale-105 hover:bg-[#055a8e]"
+                  className="group inline-flex items-center gap-2 rounded-full bg-ltb-blue px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-ltb-blue/25 transition-all duration-300 hover:scale-105 hover:bg-ltb-blue-hover"
                 >
                   Demander un devis gratuit
                   <ChevronRight
@@ -448,14 +518,10 @@ export default function Home() {
               </div>
             </ScrollReveal>
 
-            {/* Colonne droite — Image klim */}
             <ScrollReveal delay={0.2}>
               <div className="relative">
-                {/* Cadre décoratif derrière l'image */}
                 <div className="absolute -bottom-5 -right-5 -z-10 hidden h-full w-full rounded-3xl bg-ltb-blue/10 sm:block" />
                 <div className="absolute -left-5 -top-5 -z-10 hidden h-24 w-24 rounded-2xl bg-ltb-brick/15 sm:block" />
-
-                {/* Image principale */}
                 <div className="relative h-[480px] overflow-hidden rounded-3xl shadow-2xl shadow-black/15">
                   <Image
                     src="/images/klim-musalimov-rJPwYtWcMxw-unsplash.jpg"
@@ -464,8 +530,6 @@ export default function Home() {
                     className="object-cover"
                   />
                 </div>
-
-                {/* Badge flottant */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -477,9 +541,7 @@ export default function Home() {
                     <HardHat size={22} className="text-white" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <p className="font-heading text-xl font-bold leading-none text-gray-900">
-                      200+
-                    </p>
+                    <p className="font-heading text-xl font-bold leading-none text-gray-900">200+</p>
                     <p className="mt-0.5 text-xs text-gray-500">Chantiers livrés</p>
                   </div>
                 </motion.div>
@@ -489,107 +551,93 @@ export default function Home() {
         </div>
       </section>
 
-      {/* QUALITIES */}
-      <section className="overflow-hidden bg-white py-24">
+      {/* ─── QUALITIES — Genesis editorial ─── */}
+      <section className="bg-gray-950 py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <ScrollReveal>
-            <div className="mb-16 text-center">
-              <span className="bg-ltb-blue/8 mb-5 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-semibold text-ltb-blue">
-                <span className="h-1.5 w-1.5 rounded-full bg-ltb-blue" />
-                Nos atouts
-              </span>
-              <h2 className="mb-4 mt-2 font-heading text-4xl font-bold text-gray-900 sm:text-5xl">
-                Ce qui rend nos briques{" "}
-                <span className="relative inline-block">
-                  <span className="text-ltb-blue">uniques</span>
-                  <svg
-                    className="absolute -bottom-1 left-0 w-full"
-                    height="6"
-                    viewBox="0 0 100 6"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d="M0 5 Q25 0 50 5 Q75 0 100 5"
-                      stroke="#C4622D"
-                      strokeWidth="2.5"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+            <div className="mb-20 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <span className="mb-5 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-ltb-blue">
+                  <span className="h-px w-8 bg-ltb-blue" />
+                  Nos engagements
                 </span>
-              </h2>
-              <p className="mx-auto max-w-xl text-lg leading-relaxed text-gray-400">
-                Des matériaux de construction conçus pour durer et embellir vos projets.
-              </p>
+                <h2 className="font-heading text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+                  Ce qui rend nos briques
+                  <br />
+                  <span className="font-normal italic text-white/30">
+                    véritablement uniques.
+                  </span>
+                </h2>
+              </div>
+              <Link
+                href="/produits/"
+                className="group inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-white/60 transition-all hover:border-white/30 hover:text-white"
+              >
+                Voir nos produits
+                <ChevronRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-0.5"
+                />
+              </Link>
             </div>
           </ScrollReveal>
 
-          {/* Cards split-top */}
-          <div className="grid gap-6 md:grid-cols-3">
+          {/* Editorial grid */}
+          <div className="grid divide-y divide-white/10 border-y border-white/10 md:grid-cols-3 md:divide-x md:divide-y-0">
             {qualities.map((quality, i) => {
-              const themes = [
+              const accent = [
                 {
-                  gradient: "linear-gradient(135deg, #0666A2 0%, #044d7a 100%)",
-                  soft: "#EFF6FF",
-                  accent: "#0666A2",
+                  iconBg: "group-hover:bg-ltb-blue",
+                  iconBorder: "border-ltb-blue/20 group-hover:border-ltb-blue",
+                  iconText: "text-ltb-blue group-hover:text-white",
+                  line: "from-ltb-blue",
                 },
                 {
-                  gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-                  soft: "#F0FDF4",
-                  accent: "#059669",
+                  iconBg: "group-hover:bg-emerald-500",
+                  iconBorder: "border-emerald-500/20 group-hover:border-emerald-500",
+                  iconText: "text-emerald-400 group-hover:text-white",
+                  line: "from-emerald-500",
                 },
                 {
-                  gradient: "linear-gradient(135deg, #f59e0b 0%, #C4622D 100%)",
-                  soft: "#FFFBEB",
-                  accent: "#C4622D",
+                  iconBg: "group-hover:bg-ltb-brick",
+                  iconBorder: "border-ltb-brick/20 group-hover:border-ltb-brick",
+                  iconText: "text-ltb-brick group-hover:text-white",
+                  line: "from-ltb-brick",
                 },
-              ];
-              const theme = themes[i];
+              ][i];
               return (
-                <ScrollReveal key={quality.title} delay={i * 0.15}>
+                <ScrollReveal key={quality.title} delay={i * 0.12}>
                   <motion.div
-                    whileHover={{ y: -10 }}
-                    className="hover:shadow-black/12 group overflow-hidden rounded-3xl shadow-md transition-all duration-500 hover:shadow-2xl"
+                    className="group relative overflow-hidden px-8 py-12 transition-colors duration-500 hover:bg-white/[0.03]"
                   >
-                    {/* Zone colorée haute */}
+                    {/* Decorative large number */}
+                    <span className="pointer-events-none absolute -right-3 -top-3 select-none font-heading text-[120px] font-bold leading-none text-white/[0.04]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    {/* Icon */}
                     <div
-                      className="relative flex h-52 items-center justify-center overflow-hidden"
-                      style={{ background: theme.gradient }}
+                      className={`mb-8 flex h-12 w-12 items-center justify-center rounded-xl border bg-white/5 transition-all duration-300 ${accent.iconBg} ${accent.iconBorder}`}
                     >
-                      {/* Cercles décoratifs */}
-                      <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" />
-                      <div className="absolute -bottom-6 -left-6 h-28 w-28 rounded-full bg-white/10" />
-                      <div className="absolute left-5 top-4 h-8 w-8 rounded-full bg-white/10" />
-
-                      {/* Numéro décoratif en fond */}
-                      <span className="absolute bottom-3 right-5 select-none font-heading text-7xl font-bold leading-none text-white/10">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-
-                      {/* Icône centrale avec effet verre */}
-                      <motion.div
-                        className="w-22 h-22 relative z-10 flex items-center justify-center"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-white/20 shadow-lg ring-1 ring-white/30 backdrop-blur-sm">
-                          <quality.icon size={38} strokeWidth={1.5} className="text-white" />
-                        </div>
-                      </motion.div>
-                    </div>
-
-                    {/* Zone blanche basse */}
-                    <div className="rounded-b-3xl border-x border-b border-gray-100 bg-white px-7 py-6">
-                      <div
-                        className="mb-4 inline-block h-1 w-8 rounded-full"
-                        style={{ background: theme.gradient }}
+                      <quality.icon
+                        size={22}
+                        strokeWidth={1.8}
+                        className={`transition-colors duration-300 ${accent.iconText}`}
                       />
-                      <h3 className="mb-2 font-heading text-xl font-bold text-gray-900">
-                        {quality.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed text-gray-500">{quality.description}</p>
                     </div>
+
+                    <h3 className="mb-4 font-heading text-2xl font-bold text-white">
+                      {quality.title}
+                    </h3>
+                    <p className="mb-8 text-sm leading-relaxed text-white/50">
+                      {quality.description}
+                    </p>
+
+                    {/* Hover reveal line */}
+                    <div
+                      className={`h-px w-0 bg-gradient-to-r to-transparent transition-all duration-500 group-hover:w-full ${accent.line}`}
+                    />
                   </motion.div>
                 </ScrollReveal>
               );
@@ -598,7 +646,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PRODUCTS */}
+      {/* ─── PRODUCTS ─── */}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
@@ -649,7 +697,7 @@ export default function Home() {
                     <h3 className="mb-2 font-heading text-xl font-bold transition-colors group-hover:text-ltb-blue">
                       {product.name}
                     </h3>
-                    <p className="mb-4 text-sm text-ltb-light">{product.description}</p>
+                    <p className="mb-4 text-sm text-gray-500">{product.description}</p>
                     <Link
                       href="/produits/"
                       className="inline-flex items-center gap-1 text-sm font-medium text-ltb-blue transition-all duration-300 hover:gap-2"
@@ -664,117 +712,69 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="bg-[#1a1a1a] py-20">
+      {/* ─── TESTIMONIALS — Marquee ─── */}
+      <section className="overflow-hidden bg-ltb-cream py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="mb-16 text-center">
-              <div className="mb-4 flex items-center justify-center gap-3">
-                <div className="h-0.5 w-8 bg-ltb-blue" />
-                <span className="text-sm font-semibold uppercase tracking-widest text-ltb-blue">
-                  Témoignages
-                </span>
-                <div className="h-0.5 w-8 bg-ltb-blue" />
-              </div>
-              <h2 className="mt-3 font-heading text-4xl font-bold text-white sm:text-5xl">
-                Ce que nos <span className="font-normal italic text-white/50">clients</span> disent
-                de nous
+              <span className="mb-5 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-ltb-blue">
+                <span className="h-px w-8 bg-ltb-blue" />
+                Témoignages
+                <span className="h-px w-8 bg-ltb-blue" />
+              </span>
+              <h2 className="mt-3 font-heading text-4xl font-bold text-gray-900 sm:text-5xl">
+                Ce que nos{" "}
+                <span className="font-normal italic text-gray-400">clients</span> disent de nous
               </h2>
             </div>
           </ScrollReveal>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {testimonialsLoading
-              ? [...Array(3)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="animate-pulse rounded-2xl border border-gray-100 bg-white p-6 shadow-lg"
-                  >
-                    <div className="mb-4 flex items-start gap-4">
-                      <div className="h-14 w-14 flex-shrink-0 rounded-full bg-gray-200" />
-                      <div className="flex-1 space-y-2">
-                        <div className="h-3 w-24 rounded bg-gray-200" />
-                        <div className="h-3 w-16 rounded bg-gray-200" />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="h-3 w-full rounded bg-gray-200" />
-                      <div className="h-3 w-5/6 rounded bg-gray-200" />
-                      <div className="h-3 w-4/6 rounded bg-gray-200" />
-                    </div>
-                  </div>
-                ))
-              : testimonials.map((t) => (
-                  <motion.div
-                    key={t.id}
-                    whileHover={{ y: -4 }}
-                    className="rounded-2xl border border-gray-100 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl"
-                  >
-                    <div className="mb-4 flex items-start gap-4">
-                      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-ltb-blue/10 text-lg font-bold text-ltb-blue">
-                        {t.name[0]}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-sm font-bold text-gray-900">{t.name}</h4>
-                        <p className="text-xs text-gray-500">{t.role}</p>
-                      </div>
-                      <div className="flex flex-shrink-0 items-center gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className={
-                              i < t.rating
-                                ? "fill-yellow-400 text-yellow-400"
-                                : "fill-gray-200 text-gray-200"
-                            }
-                          />
-                        ))}
-                        <span className="ml-1 text-xs font-semibold text-gray-900">
-                          {t.rating}.0
-                        </span>
-                      </div>
-                      <div className="ml-1 font-serif text-3xl leading-none text-ltb-blue">
-                        &ldquo;
-                      </div>
-                    </div>
-                    <p className="text-sm leading-relaxed text-gray-600">{t.text}</p>
-                  </motion.div>
-                ))}
-          </div>
-
-          {/* Pagination bars */}
-          <div className="mt-10 flex justify-center gap-2">
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className={`h-1 rounded-full transition-all duration-300 ${
-                  i === 0 ? "w-8 bg-ltb-blue" : "w-4 bg-white/30"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Bouton ajouter témoignage */}
-          <ScrollReveal>
-            <div className="mt-12 text-center">
-              <button
-                onClick={() => {
-                  setShowTestimonialModal(true);
-                  setTestimonialSubmitted(false);
-                  setTestimonialForm({ name: "", role: "", rating: 5, text: "" });
-                }}
-                className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-gray-900 shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gray-50"
-              >
-                <MessageSquarePlus size={20} className="text-ltb-blue" />
-                <span className="text-ltb-blue">Ajouter votre témoignage</span>
-              </button>
-            </div>
-          </ScrollReveal>
         </div>
+
+        {/* Row 1 — left scroll */}
+        <div className="relative mb-5">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-ltb-cream to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-ltb-cream to-transparent" />
+          <div className="overflow-hidden">
+            <div className="marquee-track flex w-max animate-marquee gap-5 pb-1">
+              {duplicated.map((t, i) => (
+                <TestimonialCard key={i} t={t} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Row 2 — right scroll */}
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-ltb-cream to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-ltb-cream to-transparent" />
+          <div className="overflow-hidden">
+            <div className="marquee-track flex w-max animate-marquee-reverse gap-5 pb-1">
+              {duplicated.map((t, i) => (
+                <TestimonialCard key={`r-${i}`} t={t} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Add testimonial button */}
+        <ScrollReveal>
+          <div className="mt-14 text-center">
+            <button
+              onClick={() => {
+                setShowTestimonialModal(true);
+                setTestimonialSubmitted(false);
+                setTestimonialForm({ name: "", role: "", rating: 5, text: "" });
+              }}
+              className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-gray-900 shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gray-50"
+            >
+              <MessageSquarePlus size={20} className="text-ltb-blue" />
+              <span className="text-ltb-blue">Ajouter votre témoignage</span>
+            </button>
+          </div>
+        </ScrollReveal>
       </section>
 
-      {/* FAQ */}
+      {/* ─── FAQ ─── */}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
@@ -838,9 +838,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ─── CTA ─── */}
       <section className="relative overflow-hidden bg-black py-24">
         <div className="absolute inset-0 bg-gradient-to-r from-ltb-blue/20 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.04]">
+          <svg width="100%" height="100%">
+            <pattern
+              id="cta-bricks"
+              x="0"
+              y="0"
+              width="80"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <rect x="1" y="1" width="37" height="18" rx="3" fill="white" />
+              <rect x="42" y="1" width="37" height="18" rx="3" fill="white" />
+              <rect x="21" y="21" width="37" height="18" rx="3" fill="white" />
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#cta-bricks)" />
+          </svg>
+        </div>
         <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <ScrollReveal>
             <h2 className="mb-6 font-heading text-4xl font-bold text-white sm:text-5xl">
@@ -860,7 +877,8 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
-      {/* MODAL TÉMOIGNAGE */}
+
+      {/* ─── MODAL TÉMOIGNAGE ─── */}
       <AnimatePresence>
         {showTestimonialModal && (
           <motion.div
@@ -877,7 +895,7 @@ export default function Home() {
               className="w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between bg-gradient-to-br from-ltb-blue to-[#044d7a] p-6">
+              <div className="flex items-center justify-between bg-gradient-to-br from-ltb-blue to-ltb-blue-dark p-6">
                 <h3 className="font-heading text-xl font-bold text-white">
                   {testimonialSubmitted ? "Merci !" : "Votre témoignage"}
                 </h3>
@@ -1027,7 +1045,7 @@ export default function Home() {
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-ltb-blue px-6 py-4 font-semibold text-white shadow-lg shadow-ltb-blue/20 transition-all duration-300 hover:scale-[1.02] hover:bg-[#055a8e] disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-ltb-blue px-6 py-4 font-semibold text-white shadow-lg shadow-ltb-blue/20 transition-all duration-300 hover:scale-[1.02] hover:bg-ltb-blue-hover disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {submitting ? (
                         <span className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />

@@ -75,7 +75,7 @@ const timeline = [
     title: "Modèle Turque",
     description:
       "Introduction du modèle turque authentique, alliant savoir-faire traditionnel et performance moderne.",
-    color: "#059669",
+    color: "#7A3B1E",
     isTop: false,
   },
   {
@@ -83,7 +83,7 @@ const timeline = [
     title: "100+ Chantiers",
     description:
       "Cap des 100 chantiers livrés franchi. Modernisation complète des équipements de production.",
-    color: "#7C3AED",
+    color: "#044d7a",
     isTop: true,
   },
   {
@@ -620,7 +620,7 @@ export default function APropos() {
                 href="https://maps.google.com/?q=Adetikope+Lome+Togo"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-ltb-blue px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-ltb-blue/20 transition-all duration-300 hover:scale-105 hover:bg-[#055a8e]"
+                className="group inline-flex items-center gap-2 rounded-full bg-ltb-blue px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-ltb-blue/20 transition-all duration-300 hover:scale-105 hover:bg-ltb-blue-hover"
               >
                 Voir sur Google Maps
                 <ChevronRight

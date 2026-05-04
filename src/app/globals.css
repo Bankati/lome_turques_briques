@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap");
 
 :root {
   --font-sans: "Inter", system-ui, sans-serif;
@@ -36,6 +36,32 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #0666a2;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #044d7a;
+}
+
+/* Text selection */
+::selection {
+  background-color: #0666a2;
+  color: #ffffff;
+}
+
+/* Marquee pause on hover */
+.marquee-track:hover {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

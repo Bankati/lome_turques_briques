@@ -168,7 +168,9 @@ function TestimonialCard({ t }: { t: TestimonialData }) {
           <Star
             key={i}
             size={13}
-            className={i < t.rating ? "fill-amber-400 text-amber-400" : "fill-gray-100 text-gray-100"}
+            className={
+              i < t.rating ? "fill-amber-400 text-amber-400" : "fill-gray-100 text-gray-100"
+            }
           />
         ))}
         <span className="ml-1.5 text-xs font-semibold text-gray-400">{t.rating}.0</span>
@@ -237,9 +239,7 @@ export default function Home() {
     setCurrentHero((prev) => (prev - 1 + heroImages.length) % heroImages.length);
 
   const displayTestimonials =
-    testimonialsLoading || testimonials.length === 0
-      ? fallbackTestimonials
-      : testimonials;
+    testimonialsLoading || testimonials.length === 0 ? fallbackTestimonials : testimonials;
   const duplicated = [
     ...displayTestimonials,
     ...displayTestimonials,
@@ -541,7 +541,9 @@ export default function Home() {
                     <HardHat size={22} className="text-white" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <p className="font-heading text-xl font-bold leading-none text-gray-900">200+</p>
+                    <p className="font-heading text-xl font-bold leading-none text-gray-900">
+                      200+
+                    </p>
                     <p className="mt-0.5 text-xs text-gray-500">Chantiers livrés</p>
                   </div>
                 </motion.div>
@@ -565,9 +567,7 @@ export default function Home() {
                 <h2 className="font-heading text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
                   Ce qui rend nos briques
                   <br />
-                  <span className="font-normal italic text-white/30">
-                    véritablement uniques.
-                  </span>
+                  <span className="font-normal italic text-white/30">véritablement uniques.</span>
                 </h2>
               </div>
               <Link
@@ -608,9 +608,7 @@ export default function Home() {
               ][i];
               return (
                 <ScrollReveal key={quality.title} delay={i * 0.12}>
-                  <motion.div
-                    className="group relative overflow-hidden px-8 py-12 transition-colors duration-500 hover:bg-white/[0.03]"
-                  >
+                  <motion.div className="group relative overflow-hidden px-8 py-12 transition-colors duration-500 hover:bg-white/[0.03]">
                     {/* Decorative large number */}
                     <span className="pointer-events-none absolute -right-3 -top-3 select-none font-heading text-[120px] font-bold leading-none text-white/[0.04]">
                       {String(i + 1).padStart(2, "0")}
@@ -723,8 +721,8 @@ export default function Home() {
                 <span className="h-px w-8 bg-ltb-blue" />
               </span>
               <h2 className="mt-3 font-heading text-4xl font-bold text-gray-900 sm:text-5xl">
-                Ce que nos{" "}
-                <span className="font-normal italic text-gray-400">clients</span> disent de nous
+                Ce que nos <span className="font-normal italic text-gray-400">clients</span> disent
+                de nous
               </h2>
             </div>
           </ScrollReveal>

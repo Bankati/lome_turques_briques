@@ -13,17 +13,17 @@ const config: Config = {
           // ── Palette officielle (logo) ──────────────────────────
           white: "#FFFFFF",
           black: "#000000",
-          blue: "#065A96",       // Bleu principal du logo
+          blue: "#065A96", // Bleu principal du logo
           "blue-dark": "#044070", // Variante sombre (dégradés, sections)
           "blue-hover": "#054f82", // Hover des boutons bleus
-          gray: "#D5D6D6",       // Gris clair (bordures, séparateurs)
-          light: "#BBBEBE",      // Gris moyen (texte secondaire)
-          cream: "#EDF0F0",      // Fond clair (sections alternées)
+          gray: "#D5D6D6", // Gris clair (bordures, séparateurs)
+          light: "#BBBEBE", // Gris moyen (texte secondaire)
+          cream: "#EDF0F0", // Fond clair (sections alternées)
           // ── Alias pour rétrocompatibilité ──────────────────────
           // Toutes les anciens accents chauds sont remappés sur la palette
-          brick: "#065A96",      // → bleu (remplace l'orange)
-          earth: "#044070",      // → bleu foncé (remplace le brun)
-          sand: "#EDF0F0",       // → fond clair (remplace le sable)
+          brick: "#065A96", // → bleu (remplace l'orange)
+          earth: "#044070", // → bleu foncé (remplace le brun)
+          sand: "#EDF0F0", // → fond clair (remplace le sable)
         },
       },
       fontFamily: {

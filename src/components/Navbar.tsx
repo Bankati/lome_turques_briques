@@ -127,9 +127,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200 md:hidden ${
-                scrolled
-                  ? "text-gray-900 hover:bg-gray-100"
-                  : "text-white hover:bg-white/10"
+                scrolled ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
               }`}
               aria-label="Toggle menu"
             >
@@ -175,11 +173,7 @@ export default function Navbar() {
           >
             {/* Drawer header */}
             <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
-              <Link
-                href="/"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3"
-              >
+              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
                 <div className="relative h-9 w-9 overflow-hidden rounded-lg shadow-sm">
                   <Image src="/images/logo.jpg" alt="LTB" fill className="object-contain" />
                 </div>

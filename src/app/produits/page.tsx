@@ -220,7 +220,7 @@ export default function Produits() {
             className="absolute inset-0"
           >
             <Image
-              src="/images/hero%20section/webaliser-_TPTXZd9mOo-unsplash.jpg"
+              src="/images/image%203.png"
               alt="Construction moderne avec briques LTB"
               fill
               className="object-cover"
@@ -463,7 +463,7 @@ export default function Produits() {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <ScrollReveal direction="left">
               <div className="relative h-[400px] overflow-hidden rounded-2xl bg-ltb-cream sm:h-[500px]">
-                <Image src="/images/apropos.jpg" alt="Usine LTB" fill className="object-cover" />
+                <Image src="/images/1729.jpg" alt="Usine LTB" fill className="object-cover" />
               </div>
             </ScrollReveal>
             <ScrollReveal direction="right">

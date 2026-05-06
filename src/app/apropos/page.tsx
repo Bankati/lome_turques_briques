@@ -205,7 +205,7 @@ export default function APropos() {
                 {/* Image principale */}
                 <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl shadow-black/10">
                   <Image
-                    src="/images/apropos.jpg"
+                    src="/images/Histoire.jpg"
                     alt="Usine Lomé Turque Brique"
                     fill
                     className="object-cover"
@@ -450,7 +450,7 @@ export default function APropos() {
               <div className="relative">
                 <div className="relative h-[260px] overflow-hidden rounded-3xl shadow-2xl shadow-black/10 sm:h-[380px] lg:h-[460px]">
                   <Image
-                    src="/images/klim-musalimov-rJPwYtWcMxw-unsplash.jpg"
+                    src="/images/image%203.png"
                     alt="Production LTB"
                     fill
                     className="object-cover"

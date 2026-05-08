@@ -34,10 +34,10 @@ const heroImages = [
 ];
 
 const stats = [
-  { icon: Building2,  value: 7,   suffix: "+",  label: "Années d'expérience" },
-  { icon: Warehouse,  value: 50,  suffix: "K+", label: "Briques produites"   },
-  { icon: HardHat,    value: 200, suffix: "+",  label: "Chantiers livrés"    },
-  { icon: Shield,     value: 100, suffix: "%",  label: "Clients satisfaits"  },
+  { icon: Building2, value: 7, suffix: "+", label: "Années d'expérience" },
+  { icon: Warehouse, value: 50, suffix: "K+", label: "Briques produites" },
+  { icon: HardHat, value: 200, suffix: "+", label: "Chantiers livrés" },
+  { icon: Shield, value: 100, suffix: "%", label: "Clients satisfaits" },
 ];
 
 const features = [
@@ -157,32 +157,57 @@ const products = [
 ];
 
 const processSteps = [
-  { icon: PhoneCall, step: "01", title: "Demande de Devis",  description: "Contactez-nous par téléphone, WhatsApp ou formulaire. Réponse sous 2h."                         },
-  { icon: Package,   step: "02", title: "Consultation",       description: "Nos experts analysent votre projet et vous recommandent les matériaux adaptés."                   },
-  { icon: Flame,     step: "03", title: "Production",         description: "Fabrication sur mesure selon vos spécifications et normes de qualité."                             },
-  { icon: Truck,     step: "04", title: "Livraison",          description: "Livraison rapide sous 24-48h dans la région de Lomé et ses environs."                             },
+  {
+    icon: PhoneCall,
+    step: "01",
+    title: "Demande de Devis",
+    description: "Contactez-nous par téléphone, WhatsApp ou formulaire. Réponse sous 2h.",
+  },
+  {
+    icon: Package,
+    step: "02",
+    title: "Consultation",
+    description: "Nos experts analysent votre projet et vous recommandent les matériaux adaptés.",
+  },
+  {
+    icon: Flame,
+    step: "03",
+    title: "Production",
+    description: "Fabrication sur mesure selon vos spécifications et normes de qualité.",
+  },
+  {
+    icon: Truck,
+    step: "04",
+    title: "Livraison",
+    description: "Livraison rapide sous 24-48h dans la région de Lomé et ses environs.",
+  },
 ];
 
 const faqData = [
   {
     question: "Quels types de briques proposez-vous ?",
-    answer: "Nous proposons cinq gammes : briques creuses (légères et économiques), briques pleines (haute densité), le modèle turque (technologie premium), les hourdies (pour planchers) et les pavés (sols extérieurs antidérapants).",
+    answer:
+      "Nous proposons cinq gammes : briques creuses (légères et économiques), briques pleines (haute densité), le modèle turque (technologie premium), les hourdies (pour planchers) et les pavés (sols extérieurs antidérapants).",
   },
   {
     question: "Quel est le délai de livraison pour une commande ?",
-    answer: "Pour les commandes standards dans la région de Lomé, la livraison se fait sous 24 à 48 heures ouvrables. Pour les grandes quantités ou hors région, nous vous fournissons un devis personnalisé.",
+    answer:
+      "Pour les commandes standards dans la région de Lomé, la livraison se fait sous 24 à 48 heures ouvrables. Pour les grandes quantités ou hors région, nous vous fournissons un devis personnalisé.",
   },
   {
     question: "Quels sont les avantages des briques turques ?",
-    answer: "Les briques turques offrent une résistance thermique supérieure, une durabilité exceptionnelle face aux intempéries, un excellent rapport qualité-prix et une finition esthétique soignée adaptée à tous les styles architecturaux.",
+    answer:
+      "Les briques turques offrent une résistance thermique supérieure, une durabilité exceptionnelle face aux intempéries, un excellent rapport qualité-prix et une finition esthétique soignée adaptée à tous les styles architecturaux.",
   },
   {
     question: "Proposez-vous des conseils pour choisir mes briques ?",
-    answer: "Oui, notre équipe commerciale et nos ingénieurs sont à votre disposition pour vous guider selon votre projet : fondations, murs de clôture, dallage extérieur, ou construction de maison. Nous effectuons même des visites sur chantier.",
+    answer:
+      "Oui, notre équipe commerciale et nos ingénieurs sont à votre disposition pour vous guider selon votre projet : fondations, murs de clôture, dallage extérieur, ou construction de maison. Nous effectuons même des visites sur chantier.",
   },
   {
     question: "Quels facteurs influencent le prix des briques ?",
-    answer: "Le prix dépend du type de brique, de la quantité commandée (tarifs dégressifs à partir de 5 000 unités), du lieu de livraison et des options de finition. Contactez-nous pour un devis sur mesure.",
+    answer:
+      "Le prix dépend du type de brique, de la quantité commandée (tarifs dégressifs à partir de 5 000 unités), du lieu de livraison et des options de finition. Contactez-nous pour un devis sur mesure.",
   },
 ];
 
@@ -196,25 +221,60 @@ interface TestimonialData {
 }
 
 const fallbackTestimonials: TestimonialData[] = [
-  { id: "1", text: "J'ai construit ma maison avec les briques de Lomé Turque Brique et je suis plus que satisfait. La qualité est exceptionnelle et le service client impeccable.", name: "Koffi A.",   role: "Lomé",                  rating: 5, createdAt: new Date().toISOString() },
-  { id: "2", text: "Entreprise sérieuse et professionnelle. Les briques livrées étaient exactement comme sur les échantillons. Je recommande vivement !",                          name: "Amah E.",   role: "Architecte",            rating: 5, createdAt: new Date().toISOString() },
-  { id: "3", text: "La résistance de ces briques est remarquable. Même après la saison des pluies, aucun problème à signaler. Un investissement durable.",                        name: "Séna G.",   role: "Promoteur immobilier",  rating: 5, createdAt: new Date().toISOString() },
-  { id: "4", text: "Très satisfait de la qualité des pavés. L'équipe a été réactive et professionnelle du devis à la livraison.",                                                 name: "Kossi M.",  role: "Entrepreneur BTP",      rating: 5, createdAt: new Date().toISOString() },
-  { id: "5", text: "Les briques turques sont vraiment d'une autre qualité. Mon chantier a pu avancer vite grâce à leur ponctualité de livraison.",                                name: "Afi D.",    role: "Particulier",           rating: 5, createdAt: new Date().toISOString() },
+  {
+    id: "1",
+    text: "J'ai construit ma maison avec les briques de Lomé Turque Brique et je suis plus que satisfait. La qualité est exceptionnelle et le service client impeccable.",
+    name: "Koffi A.",
+    role: "Lomé",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "2",
+    text: "Entreprise sérieuse et professionnelle. Les briques livrées étaient exactement comme sur les échantillons. Je recommande vivement !",
+    name: "Amah E.",
+    role: "Architecte",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "3",
+    text: "La résistance de ces briques est remarquable. Même après la saison des pluies, aucun problème à signaler. Un investissement durable.",
+    name: "Séna G.",
+    role: "Promoteur immobilier",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "4",
+    text: "Très satisfait de la qualité des pavés. L'équipe a été réactive et professionnelle du devis à la livraison.",
+    name: "Kossi M.",
+    role: "Entrepreneur BTP",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "5",
+    text: "Les briques turques sont vraiment d'une autre qualité. Mon chantier a pu avancer vite grâce à leur ponctualité de livraison.",
+    name: "Afi D.",
+    role: "Particulier",
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
 ];
 
 // ─── SOUS-COMPOSANTS ──────────────────────────────────────────────────────────
 
 const tagStyles: Record<string, string> = {
-  Populaire:    "bg-blue-50 text-blue-700",
-  "Best-seller":"bg-green-50 text-green-700",
-  Premium:      "bg-primary-lighter text-primary-dark",
-  Classique:    "bg-gray-100 text-gray-600",
-  Nouveau:      "bg-primary-light/10 text-primary-dark",
-  Design:       "bg-purple-50 text-purple-700",
-  Technique:    "bg-orange-50 text-orange-700",
-  "Sécurité":   "bg-red-50 text-red-700",
-  Pro:          "bg-primary-dark text-white",
+  Populaire: "bg-blue-50 text-blue-700",
+  "Best-seller": "bg-green-50 text-green-700",
+  Premium: "bg-primary-lighter text-primary-dark",
+  Classique: "bg-gray-100 text-gray-600",
+  Nouveau: "bg-primary-light/10 text-primary-dark",
+  Design: "bg-purple-50 text-purple-700",
+  Technique: "bg-orange-50 text-orange-700",
+  Sécurité: "bg-red-50 text-red-700",
+  Pro: "bg-primary-dark text-white",
 };
 
 function ProductCard({ product }: { product: (typeof products)[0] }) {
@@ -231,7 +291,9 @@ function ProductCard({ product }: { product: (typeof products)[0] }) {
           fill
           className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
         />
-        <span className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-xs font-semibold ${tagStyles[product.tag] ?? "bg-gray-100 text-gray-600"}`}>
+        <span
+          className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-xs font-semibold ${tagStyles[product.tag] ?? "bg-gray-100 text-gray-600"}`}
+        >
           {product.tag}
         </span>
       </div>
@@ -245,7 +307,10 @@ function ProductCard({ product }: { product: (typeof products)[0] }) {
           className="group/btn inline-flex items-center gap-1.5 text-xs font-semibold text-primary-dark transition-colors hover:text-primary-light"
         >
           Voir les détails
-          <ChevronRight size={14} className="transition-transform group-hover/btn:translate-x-0.5" />
+          <ChevronRight
+            size={14}
+            className="transition-transform group-hover/btn:translate-x-0.5"
+          />
         </Link>
       </div>
     </motion.div>
@@ -257,7 +322,13 @@ function TestimonialCard({ t }: { t: TestimonialData }) {
     <div className="w-[320px] flex-shrink-0 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
       <div className="mb-4 flex items-center gap-1">
         {[...Array(5)].map((_, i) => (
-          <Star key={i} size={13} className={i < t.rating ? "fill-amber-400 text-amber-400" : "fill-gray-100 text-gray-100"} />
+          <Star
+            key={i}
+            size={13}
+            className={
+              i < t.rating ? "fill-amber-400 text-amber-400" : "fill-gray-100 text-gray-100"
+            }
+          />
         ))}
         <span className="ml-1.5 text-xs font-semibold text-gray-400">{t.rating}.0</span>
       </div>
@@ -280,16 +351,16 @@ function TestimonialCard({ t }: { t: TestimonialData }) {
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const [currentHero,     setCurrentHero]     = useState(0);
-  const [activeCategory,  setActiveCategory]  = useState("Tous");
-  const [testimonials,    setTestimonials]    = useState<TestimonialData[]>([]);
+  const [currentHero, setCurrentHero] = useState(0);
+  const [activeCategory, setActiveCategory] = useState("Tous");
+  const [testimonials, setTestimonials] = useState<TestimonialData[]>([]);
   const [testimonialsLoading, setTestimonialsLoading] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const res  = await fetch("/api/testimonials/");
+        const res = await fetch("/api/testimonials/");
         if (!res.ok) throw new Error();
         const data = await res.json();
         setTestimonials(Array.isArray(data) && data.length > 0 ? data : fallbackTestimonials);
@@ -313,12 +384,12 @@ export default function Home() {
   const filteredProducts =
     activeCategory === "Tous" ? products : products.filter((p) => p.category === activeCategory);
 
-  const display   = testimonialsLoading || testimonials.length === 0 ? fallbackTestimonials : testimonials;
+  const display =
+    testimonialsLoading || testimonials.length === 0 ? fallbackTestimonials : testimonials;
   const duplicated = [...display, ...display, ...display, ...display];
 
   return (
     <div>
-
       {/* ══════════════════════════════════════════════════════
           HERO
       ══════════════════════════════════════════════════════ */}
@@ -330,11 +401,17 @@ export default function Home() {
               key={currentHero}
               initial={{ opacity: 0, scale: 1.08 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{   opacity: 0, scale: 0.96 }}
+              exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 1.2 }}
               className="absolute inset-0"
             >
-              <Image src={heroImages[currentHero]} alt="Construction en briques" fill className="object-cover" priority />
+              <Image
+                src={heroImages[currentHero]}
+                alt="Construction en briques"
+                fill
+                className="object-cover"
+                priority
+              />
             </motion.div>
           </AnimatePresence>
           {/* Overlay bleu marine officiel */}
@@ -345,9 +422,16 @@ export default function Home() {
         {/* Motif briques */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.04]">
           <svg width="100%" height="100%">
-            <pattern id="hero-bricks" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
-              <rect x="1"  y="1"  width="37" height="18" rx="3" fill="white" />
-              <rect x="42" y="1"  width="37" height="18" rx="3" fill="white" />
+            <pattern
+              id="hero-bricks"
+              x="0"
+              y="0"
+              width="80"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <rect x="1" y="1" width="37" height="18" rx="3" fill="white" />
+              <rect x="42" y="1" width="37" height="18" rx="3" fill="white" />
               <rect x="21" y="21" width="37" height="18" rx="3" fill="white" />
             </pattern>
             <rect width="100%" height="100%" fill="url(#hero-bricks)" />
@@ -357,9 +441,13 @@ export default function Home() {
         {/* Contenu */}
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center lg:max-w-[60%] lg:text-left">
-
             {/* Badge */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} className="mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="mb-6"
+            >
               <span className="inline-flex items-center gap-2 rounded-full border border-primary-light/30 bg-primary-light/15 px-4 py-2 text-sm font-semibold text-primary-light backdrop-blur-sm">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary-light" />
                 🇹🇬 La qualité turque au service du Togo
@@ -368,18 +456,22 @@ export default function Home() {
 
             {/* H1 */}
             <motion.h1
-              initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="mb-6 font-heading text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
             >
-              Briques de<br />
-              <span className="text-primary-light">Qualité Supérieure</span><br />
+              Briques de
+              <br />
+              <span className="text-primary-light">Qualité Supérieure</span>
+              <br />
               <span className="text-white/90">pour le Togo</span>
             </motion.h1>
 
             {/* Texte */}
             <motion.p
-              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg lg:mx-0"
             >
@@ -389,7 +481,8 @@ export default function Home() {
 
             {/* CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
               className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start"
             >
@@ -398,7 +491,10 @@ export default function Home() {
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary-light px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-light/30 transition-all duration-300 hover:scale-105 hover:bg-primary-600 hover:shadow-xl"
               >
                 Obtenir un Devis
-                <ChevronRight size={18} className="transition-transform group-hover:translate-x-1" />
+                <ChevronRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </Link>
               <Link
                 href="/produits/"
@@ -410,25 +506,31 @@ export default function Home() {
 
             {/* Social proof */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.0 }}
               className="mt-10 flex items-center justify-center gap-4 lg:justify-start"
             >
               <div className="flex -space-x-2">
                 {[
-                  { initial: "K", bg: "bg-primary-dark"  },
-                  { initial: "A", bg: "bg-primary-light"  },
-                  { initial: "S", bg: "bg-emerald-500"    },
-                  { initial: "E", bg: "bg-amber-500"      },
+                  { initial: "K", bg: "bg-primary-dark" },
+                  { initial: "A", bg: "bg-primary-light" },
+                  { initial: "S", bg: "bg-emerald-500" },
+                  { initial: "E", bg: "bg-amber-500" },
                 ].map((item, i) => (
-                  <div key={i} className={`flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/20 text-xs font-bold text-white ${item.bg}`}>
+                  <div
+                    key={i}
+                    className={`flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/20 text-xs font-bold text-white ${item.bg}`}
+                  >
                     {item.initial}
                   </div>
                 ))}
               </div>
               <div className="flex flex-col">
                 <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={12} className="fill-amber-400 text-amber-400" />)}
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
+                  ))}
                 </div>
                 <p className="text-xs text-white/70">
                   <span className="font-semibold text-white">200+</span> clients satisfaits
@@ -440,10 +542,16 @@ export default function Home() {
 
         {/* Flèches navigation */}
         <div className="pointer-events-none absolute left-4 right-4 top-1/2 z-20 flex -translate-y-1/2 justify-between">
-          <button onClick={prevHero} className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/20 text-white backdrop-blur-sm transition-all hover:bg-black/40">
+          <button
+            onClick={prevHero}
+            className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/20 text-white backdrop-blur-sm transition-all hover:bg-black/40"
+          >
             <ChevronLeft size={20} />
           </button>
-          <button onClick={nextHero} className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/20 text-white backdrop-blur-sm transition-all hover:bg-black/40">
+          <button
+            onClick={nextHero}
+            className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/20 text-white backdrop-blur-sm transition-all hover:bg-black/40"
+          >
             <ChevronRight size={20} />
           </button>
         </div>
@@ -451,17 +559,26 @@ export default function Home() {
         {/* Indicateurs dots */}
         <div className="absolute bottom-24 left-1/2 z-20 flex -translate-x-1/2 gap-2">
           {heroImages.map((_, i) => (
-            <button key={i} onClick={() => setCurrentHero(i)}
+            <button
+              key={i}
+              onClick={() => setCurrentHero(i)}
               className={`h-2 rounded-full transition-all duration-300 ${i === currentHero ? "w-8 bg-primary-light" : "w-2 bg-white/40 hover:bg-white/60"}`}
             />
           ))}
         </div>
 
         {/* Scroll indicator */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2">
-          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-white/50">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center gap-2 text-white/50"
+          >
             <span className="text-xs uppercase tracking-widest">Scroll</span>
             <ArrowDown size={18} />
           </motion.div>
@@ -481,7 +598,11 @@ export default function Home() {
                   className="group flex flex-col items-center bg-white px-3 py-10 text-center transition-all duration-300 sm:px-6"
                 >
                   <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-lighter transition-colors duration-300 group-hover:bg-primary-dark">
-                    <stat.icon size={24} strokeWidth={1.8} className="text-primary-dark transition-colors duration-300 group-hover:text-white" />
+                    <stat.icon
+                      size={24}
+                      strokeWidth={1.8}
+                      className="text-primary-dark transition-colors duration-300 group-hover:text-white"
+                    />
                   </div>
                   <div className="mb-2 font-heading text-4xl font-bold leading-none tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
                     <CountUp end={stat.value} suffix={stat.suffix} />
@@ -508,8 +629,7 @@ export default function Home() {
                 Notre engagement
               </span>
               <h2 className="mb-4 font-heading text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-                Pourquoi choisir{" "}
-                <span className="text-primary-dark">Lomé Turque Brique</span> ?
+                Pourquoi choisir <span className="text-primary-dark">Lomé Turque Brique</span> ?
               </h2>
               <p className="text-base leading-relaxed text-gray-500">
                 Depuis plus de 7 ans, nous accompagnons architectes, entrepreneurs et particuliers
@@ -545,20 +665,29 @@ export default function Home() {
               <div className="relative">
                 <div className="absolute -bottom-6 -right-6 -z-10 hidden h-full w-full rounded-3xl bg-primary-lighter sm:block" />
                 <div className="relative h-[460px] overflow-hidden rounded-3xl shadow-2xl shadow-black/15">
-                  <Image src="/images/klim-musalimov-rJPwYtWcMxw-unsplash.jpg" alt="Production Lomé Turque Brique" fill className="object-cover" />
+                  <Image
+                    src="/images/klim-musalimov-rJPwYtWcMxw-unsplash.jpg"
+                    alt="Production Lomé Turque Brique"
+                    fill
+                    className="object-cover"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-navy/30 to-transparent" />
                 </div>
                 {/* Badge flottant */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
                   className="absolute -bottom-5 left-6 flex items-center gap-4 rounded-2xl border border-gray-100 bg-white px-5 py-4 shadow-xl"
                 >
                   <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary-dark">
                     <HardHat size={22} className="text-white" strokeWidth={1.8} />
                   </div>
                   <div>
-                    <p className="font-heading text-2xl font-bold leading-none text-gray-900">200+</p>
+                    <p className="font-heading text-2xl font-bold leading-none text-gray-900">
+                      200+
+                    </p>
                     <p className="mt-0.5 text-xs text-gray-500">Chantiers livrés</p>
                   </div>
                 </motion.div>
@@ -569,8 +698,15 @@ export default function Home() {
           {/* CTA */}
           <ScrollReveal delay={0.3}>
             <div className="mt-16 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              {[{ text: "✓ Briques certifiées" }, { text: "✓ Livraison 24-48h" }, { text: "✓ Conseil sur chantier" }].map((item) => (
-                <span key={item.text} className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-2 text-sm font-medium text-gray-700 shadow-sm">
+              {[
+                { text: "✓ Briques certifiées" },
+                { text: "✓ Livraison 24-48h" },
+                { text: "✓ Conseil sur chantier" },
+              ].map((item) => (
+                <span
+                  key={item.text}
+                  className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-2 text-sm font-medium text-gray-700 shadow-sm"
+                >
                   {item.text}
                 </span>
               ))}
@@ -581,7 +717,10 @@ export default function Home() {
                 className="group inline-flex items-center gap-2 rounded-full bg-primary-dark px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-primary-dark/25 transition-all duration-300 hover:scale-105 hover:bg-primary-navy"
               >
                 Demander un devis gratuit
-                <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+                <ChevronRight
+                  size={16}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </Link>
             </div>
           </ScrollReveal>
@@ -630,7 +769,9 @@ export default function Home() {
           {/* Grille */}
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {filteredProducts.map((product, i) => (
@@ -665,8 +806,7 @@ export default function Home() {
                 Avis clients
               </span>
               <h2 className="mb-4 font-heading text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-                Ce que disent{" "}
-                <span className="text-primary-dark">nos clients</span>
+                Ce que disent <span className="text-primary-dark">nos clients</span>
               </h2>
               <p className="text-base leading-relaxed text-gray-500">
                 Des dizaines de clients satisfaits nous font confiance pour leurs projets de
@@ -679,20 +819,28 @@ export default function Home() {
         {/* Marquee 1 */}
         <div className="relative flex gap-5 overflow-x-hidden">
           <div className="flex animate-marquee gap-5">
-            {duplicated.slice(0, Math.ceil(duplicated.length / 2)).map((t, i) => <TestimonialCard key={`a-${i}`} t={t} />)}
+            {duplicated.slice(0, Math.ceil(duplicated.length / 2)).map((t, i) => (
+              <TestimonialCard key={`a-${i}`} t={t} />
+            ))}
           </div>
           <div className="flex animate-marquee gap-5" aria-hidden>
-            {duplicated.slice(0, Math.ceil(duplicated.length / 2)).map((t, i) => <TestimonialCard key={`b-${i}`} t={t} />)}
+            {duplicated.slice(0, Math.ceil(duplicated.length / 2)).map((t, i) => (
+              <TestimonialCard key={`b-${i}`} t={t} />
+            ))}
           </div>
         </div>
 
         {/* Marquee 2 (inverse) */}
         <div className="relative mt-5 flex gap-5 overflow-x-hidden">
           <div className="flex animate-marquee-reverse gap-5">
-            {duplicated.slice(Math.ceil(duplicated.length / 2)).map((t, i) => <TestimonialCard key={`c-${i}`} t={t} />)}
+            {duplicated.slice(Math.ceil(duplicated.length / 2)).map((t, i) => (
+              <TestimonialCard key={`c-${i}`} t={t} />
+            ))}
           </div>
           <div className="flex animate-marquee-reverse gap-5" aria-hidden>
-            {duplicated.slice(Math.ceil(duplicated.length / 2)).map((t, i) => <TestimonialCard key={`d-${i}`} t={t} />)}
+            {duplicated.slice(Math.ceil(duplicated.length / 2)).map((t, i) => (
+              <TestimonialCard key={`d-${i}`} t={t} />
+            ))}
           </div>
         </div>
       </section>
@@ -709,8 +857,7 @@ export default function Home() {
                 Comment ça marche
               </span>
               <h2 className="mb-4 font-heading text-3xl font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-                Votre commande{" "}
-                <span className="text-primary-dark">en 4 étapes</span>
+                Votre commande <span className="text-primary-dark">en 4 étapes</span>
               </h2>
               <p className="text-base leading-relaxed text-gray-500">
                 Un processus simple et transparent, du devis à la livraison sur chantier.
@@ -736,7 +883,9 @@ export default function Home() {
                       {step.step}
                     </span>
                   </div>
-                  <h3 className="mb-2 font-heading text-base font-semibold text-gray-900">{step.title}</h3>
+                  <h3 className="mb-2 font-heading text-base font-semibold text-gray-900">
+                    {step.title}
+                  </h3>
                   <p className="text-sm leading-relaxed text-gray-500">{step.description}</p>
                 </motion.div>
               </ScrollReveal>
@@ -757,9 +906,16 @@ export default function Home() {
         {/* Motif briques */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.04]">
           <svg width="100%" height="100%">
-            <pattern id="cta-bricks" x="0" y="0" width="80" height="40" patternUnits="userSpaceOnUse">
-              <rect x="1"  y="1"  width="37" height="18" rx="3" fill="white" />
-              <rect x="42" y="1"  width="37" height="18" rx="3" fill="white" />
+            <pattern
+              id="cta-bricks"
+              x="0"
+              y="0"
+              width="80"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <rect x="1" y="1" width="37" height="18" rx="3" fill="white" />
+              <rect x="42" y="1" width="37" height="18" rx="3" fill="white" />
               <rect x="21" y="21" width="37" height="18" rx="3" fill="white" />
             </pattern>
             <rect width="100%" height="100%" fill="url(#cta-bricks)" />
@@ -775,7 +931,8 @@ export default function Home() {
               Prêt à démarrer votre projet ?
             </span>
             <h2 className="mb-6 font-heading text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-              Transformez vos projets<br />
+              Transformez vos projets
+              <br />
               <span className="text-primary-light">avec nos briques</span>
             </h2>
             <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-white/60">
@@ -788,7 +945,10 @@ export default function Home() {
                 className="group inline-flex items-center gap-2 rounded-full bg-primary-light px-10 py-4 text-base font-semibold text-white shadow-lg shadow-primary-light/30 transition-all duration-300 hover:scale-105 hover:bg-primary-600 hover:shadow-xl"
               >
                 Obtenir un Devis Gratuit
-                <ChevronRight size={18} className="transition-transform group-hover:translate-x-1" />
+                <ChevronRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-1"
+                />
               </Link>
               <Link
                 href="tel:+22870837575"
@@ -833,15 +993,19 @@ export default function Home() {
                     <span className="font-heading text-sm font-semibold text-gray-900 sm:text-base">
                       {faq.question}
                     </span>
-                    <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-colors duration-200 ${openFaq === i ? "bg-primary-dark text-white" : "bg-gray-100 text-gray-500"}`}>
+                    <div
+                      className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-colors duration-200 ${openFaq === i ? "bg-primary-dark text-white" : "bg-gray-100 text-gray-500"}`}
+                    >
                       {openFaq === i ? <Minus size={14} /> : <Plus size={14} />}
                     </div>
                   </button>
                   <AnimatePresence>
                     {openFaq === i && (
                       <motion.div
-                        initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
                       >
                         <div className="border-t border-gray-100 px-6 pb-5 pt-4">
                           <p className="text-sm leading-relaxed text-gray-500">{faq.answer}</p>

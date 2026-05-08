@@ -4,16 +4,16 @@
 
 /* next/font injecte les familles via CSS vars */
 :root {
-  --font-inter:    "Inter",    system-ui, sans-serif;
-  --font-poppins:  "Poppins",  system-ui, sans-serif;
-  --font-sans:     var(--font-inter);
-  --font-heading:  var(--font-poppins);
+  --font-inter: "Inter", system-ui, sans-serif;
+  --font-poppins: "Poppins", system-ui, sans-serif;
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-poppins);
 
   /* Palette officielle */
-  --color-primary-navy:    #001F4D;
-  --color-primary-dark:    #003D7A;
-  --color-primary-light:   #0099FF;
-  --color-primary-lighter: #E3F0FF;
+  --color-primary-navy: #001f4d;
+  --color-primary-dark: #003d7a;
+  --color-primary-light: #0099ff;
+  --color-primary-lighter: #e3f0ff;
 }
 
 * {
@@ -36,41 +36,75 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-poppins);
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
 
-p, h1, h2, h3, h4, h5, h6, span, a {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a {
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
-button, a, [role="button"] {
+button,
+a,
+[role="button"] {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
 /* Scrollbar — Bleu Professionnel */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #003D7A; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #001F4D; }
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #003d7a;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #001f4d;
+}
 
 /* Sélection */
-::selection { background-color: #003D7A; color: #ffffff; }
+::selection {
+  background-color: #003d7a;
+  color: #ffffff;
+}
 
 /* Marquee pause au survol */
-.marquee-track:hover { animation-play-state: paused; }
+.marquee-track:hover {
+  animation-play-state: paused;
+}
 
 /* Safe-area insets */
 @layer utilities {
-  .bottom-safe-6 { bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom))); }
-  .pb-safe       { padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); }
+  .bottom-safe-6 {
+    bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom)));
+  }
+  .pb-safe {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

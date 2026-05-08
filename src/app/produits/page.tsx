@@ -212,7 +212,7 @@ export default function Produits() {
             </a>
           </motion.div>
         </div>
-        <div className="relative flex-1 overflow-hidden">
+        <div className="relative min-h-[280px] flex-1 overflow-hidden lg:min-h-0">
           <motion.div
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -351,21 +351,21 @@ export default function Produits() {
               <div className="mx-auto mt-4 h-1 w-16 bg-ltb-blue" />
             </div>
           </ScrollReveal>
-          <div className="flex flex-wrap justify-center gap-8 overflow-x-auto pb-6 pt-2">
+          <div className="grid grid-cols-2 gap-4 pb-6 pt-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-8">
             {circles.map((c, i) => (
               <ScrollReveal key={c.name} delay={i * 0.08}>
                 <motion.button
                   whileHover={{ y: -6 }}
                   onClick={() => setActiveCat(activeCat === c.name ? null : c.name)}
-                  className="flex min-w-[180px] flex-col items-center gap-5"
+                  className="flex flex-col items-center gap-3 sm:min-w-[180px] sm:gap-5"
                 >
                   <div
-                    className={`relative h-40 w-40 overflow-hidden rounded-full shadow-lg transition-all duration-300 ${c.bg} ${activeCat === c.name ? "ring-4 ring-ltb-blue" : "hover:shadow-xl"}`}
+                    className={`relative h-32 w-32 overflow-hidden rounded-full shadow-lg transition-all duration-300 sm:h-40 sm:w-40 ${c.bg} ${activeCat === c.name ? "ring-4 ring-ltb-blue" : "hover:shadow-xl"}`}
                   >
-                    <Image src={c.img} alt={c.name} fill className="object-contain p-5" />
+                    <Image src={c.img} alt={c.name} fill className="object-contain p-4 sm:p-5" />
                   </div>
                   <span
-                    className={`text-base font-semibold ${activeCat === c.name ? "text-ltb-blue" : "text-gray-700"}`}
+                    className={`text-sm font-semibold sm:text-base ${activeCat === c.name ? "text-ltb-blue" : "text-gray-700"}`}
                   >
                     {c.name}
                   </span>

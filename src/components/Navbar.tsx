@@ -169,7 +169,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 320, damping: 32 }}
-            className="fixed bottom-0 right-0 top-0 z-40 flex w-80 flex-col bg-white shadow-2xl"
+            className="fixed bottom-0 right-0 top-0 z-40 flex w-[min(20rem,_calc(100vw_-_3rem))] flex-col bg-white shadow-2xl"
           >
             {/* Drawer header */}
             <div className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
@@ -223,7 +223,7 @@ export default function Navbar() {
             </nav>
 
             {/* Drawer CTA */}
-            <div className="border-t border-gray-100 p-4">
+            <div className="pb-safe border-t border-gray-100 px-4 pt-4">
               <Link
                 href="/contact/"
                 onClick={() => setIsOpen(false)}

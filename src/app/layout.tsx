@@ -1,10 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+
+export const viewport: Viewport = {
+  themeColor: "#065A96",
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Lomé Turque Brique — Briques de qualité au Togo",

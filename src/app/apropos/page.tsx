@@ -425,11 +425,11 @@ export default function APropos() {
       {/* ─── STATS ─── */}
       <section className="border-b border-gray-100 bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 divide-y-2 divide-gray-100 lg:grid-cols-4 lg:divide-x-2 lg:divide-y-0">
+          <div className="grid grid-cols-2 gap-px bg-gray-100 lg:grid-cols-4 lg:gap-0 lg:divide-x-2 lg:divide-gray-100 lg:bg-transparent">
             {stats.map((stat, i) => (
               <ScrollReveal key={stat.label} delay={i * 0.1}>
-                <div className="px-6 py-8 text-center">
-                  <div className="mb-2 font-heading text-5xl font-bold leading-none text-gray-900">
+                <div className="bg-white px-3 py-8 text-center sm:px-6">
+                  <div className="mb-2 font-heading text-4xl font-bold leading-none text-gray-900 sm:text-5xl lg:text-6xl">
                     <CountUp end={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="mx-auto mb-2 h-0.5 w-8 rounded-full bg-ltb-brick" />

@@ -38,6 +38,35 @@ h6 {
   font-family: var(--font-heading);
 }
 
+/* Fluid media — images ne débordent jamais */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prévention des débordements de texte */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Touch mobile — supprime le flash bleu iOS et le délai 300ms */
+button,
+a,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
@@ -62,6 +91,18 @@ h6 {
 /* Marquee pause on hover */
 .marquee-track:hover {
   animation-play-state: paused;
+}
+
+/* Safe-area insets — encoche iPhone / Dynamic Island */
+@layer utilities {
+  /* Position bottom-6 + hauteur indicateur maison */
+  .bottom-safe-6 {
+    bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom)));
+  }
+  /* Padding bottom = 1rem normal + indicateur maison (si présent) */
+  .pb-safe {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

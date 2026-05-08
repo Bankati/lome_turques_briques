@@ -34,7 +34,7 @@ const heroImages = [
 
 const stats = [
   { icon: Building2, value: 7, suffix: "+", label: "Années d'expérience" },
-  { icon: Warehouse, value: 50000, suffix: "+", label: "Briques produites" },
+  { icon: Warehouse, value: 50, suffix: "K+", label: "Briques produites" },
   { icon: HardHat, value: 200, suffix: "+", label: "Chantiers livrés" },
   { icon: Shield, value: 3, suffix: "", label: "Types de briques" },
 ];
@@ -430,12 +430,12 @@ export default function Home() {
       {/* ─── STATS ─── */}
       <section className="border-y border-gray-100 bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 divide-y-2 divide-gray-100 lg:grid-cols-4 lg:divide-x-2 lg:divide-y-0">
+          <div className="grid grid-cols-2 gap-px bg-gray-100 lg:grid-cols-4 lg:gap-0 lg:divide-x-2 lg:divide-gray-100 lg:bg-transparent">
             {stats.map((stat, i) => (
               <ScrollReveal key={stat.label} delay={i * 0.1}>
                 <motion.div
                   whileHover={{ scale: 1.03 }}
-                  className="group flex flex-col items-center px-6 py-8 text-center transition-all duration-300"
+                  className="group flex flex-col items-center bg-white px-3 py-8 text-center transition-all duration-300 sm:px-6"
                 >
                   <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-ltb-blue/[0.08] transition-colors duration-300 group-hover:bg-ltb-blue">
                     <stat.icon
@@ -444,7 +444,7 @@ export default function Home() {
                       className="text-ltb-blue transition-colors duration-300 group-hover:text-white"
                     />
                   </div>
-                  <div className="mb-2 font-heading text-5xl font-bold leading-none tracking-tight text-gray-900 sm:text-6xl">
+                  <div className="mb-2 font-heading text-4xl font-bold leading-none tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
                     <CountUp end={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="mb-3 h-0.5 w-8 rounded-full bg-ltb-blue transition-all duration-300 group-hover:w-12" />

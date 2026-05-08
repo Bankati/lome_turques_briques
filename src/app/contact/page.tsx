@@ -9,7 +9,7 @@ const contactItems = [
   {
     icon: Phone,
     label: "Téléphone",
-    value: "+228 70 83 75 75",
+    value: "+228 70 393924",
     href: "tel:+22870837575",
   },
   {

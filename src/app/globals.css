@@ -1,12 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* next/font injecte les familles via CSS vars */
 :root {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-heading: "Playfair Display", Georgia, serif;
+  --font-inter:    "Inter",    system-ui, sans-serif;
+  --font-poppins:  "Poppins",  system-ui, sans-serif;
+  --font-sans:     var(--font-inter);
+  --font-heading:  var(--font-poppins);
+
+  /* Palette officielle */
+  --color-primary-navy:    #001F4D;
+  --color-primary-dark:    #003D7A;
+  --color-primary-light:   #0099FF;
+  --color-primary-lighter: #E3F0FF;
 }
 
 * {
@@ -21,7 +28,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-inter);
   color: #000000;
   background: #ffffff;
   -webkit-font-smoothing: antialiased;
@@ -29,80 +36,41 @@ body {
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins);
 }
 
-/* Fluid media — images ne débordent jamais */
-img,
-video {
+img, video {
   max-width: 100%;
   height: auto;
 }
 
-/* Prévention des débordements de texte */
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-span,
-a {
+p, h1, h2, h3, h4, h5, h6, span, a {
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
-/* Touch mobile — supprime le flash bleu iOS et le délai 300ms */
-button,
-a,
-[role="button"] {
+button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #0666a2;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #044d7a;
-}
+/* Scrollbar — Bleu Professionnel */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #003D7A; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #001F4D; }
 
-/* Text selection */
-::selection {
-  background-color: #0666a2;
-  color: #ffffff;
-}
+/* Sélection */
+::selection { background-color: #003D7A; color: #ffffff; }
 
-/* Marquee pause on hover */
-.marquee-track:hover {
-  animation-play-state: paused;
-}
+/* Marquee pause au survol */
+.marquee-track:hover { animation-play-state: paused; }
 
-/* Safe-area insets — encoche iPhone / Dynamic Island */
+/* Safe-area insets */
 @layer utilities {
-  /* Position bottom-6 + hauteur indicateur maison */
-  .bottom-safe-6 {
-    bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom)));
-  }
-  /* Padding bottom = 1rem normal + indicateur maison (si présent) */
-  .pb-safe {
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-  }
+  .bottom-safe-6 { bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom))); }
+  .pb-safe       { padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

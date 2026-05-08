@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Poppins, Inter } from "next/font/google";
 import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -6,8 +7,22 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
 export const viewport: Viewport = {
-  themeColor: "#065A96",
+  themeColor: "#003D7A",
   viewportFit: "cover",
 };
 
@@ -33,8 +48,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const isAdmin = pathname.startsWith("/admin");
 
   return (
-    <html lang="fr">
-      <body className="flex min-h-screen flex-col">
+    <html lang="fr" className={`${poppins.variable} ${inter.variable}`}>
+      <body className="flex min-h-screen flex-col bg-white">
         {!isAdmin && <Navbar />}
         <main className={isAdmin ? "min-h-screen" : "flex-1"}>{children}</main>
         {!isAdmin && <Footer />}

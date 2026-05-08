@@ -6,7 +6,8 @@
       "PowerShell(Set-Location \"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\"; ls -Recurse -Directory | Select-Object FullName | ForEach-Object { $_.FullName -replace [regex]::Escape\\(\"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\"\\), \".\" } | Sort-Object | Select-Object -First 100)",
       "PowerShell(Set-Location \"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\"; ls -Recurse src -Directory | Select-Object FullName | ForEach-Object { $_.FullName -replace [regex]::Escape\\(\"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\\\\src\"\\), \"src\" } | Sort-Object)",
       "PowerShell(Set-Location \"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\"; Get-ChildItem -Recurse src -File | Select-Object FullName | ForEach-Object { $_.FullName -replace [regex]::Escape\\(\"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\\\\\"\\), \"\" })",
-      "PowerShell(Set-Location \"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\"; Get-ChildItem -File | Select-Object Name | ForEach-Object { $_.Name })"
+      "PowerShell(Set-Location \"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\"; Get-ChildItem -File | Select-Object Name | ForEach-Object { $_.Name })",
+      "Bash(dir \"c:\\\\Users\\\\BK\\\\Documents\\\\PROJET FAIT ET VENDUS\\\\LOME TRUC BRIQUES\\\\public\\\\images\\\\produits\" /s /b)"
     ]
   }
 }

@@ -14,7 +14,6 @@ import {
   Building2,
   HardHat,
   Warehouse,
-  CheckCircle2,
   Plus,
   Minus,
   Clock,

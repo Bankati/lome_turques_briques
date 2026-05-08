@@ -50,7 +50,7 @@ const competences = [
   "Modèle Turque Authentique",
   "Hourdies 12 & 15",
   "Pavés Antidérapants",
-  "Livraison sur tout Lomé",
+  "Livraison sur tout Lome",
 ];
 
 const timeline = [

@@ -230,7 +230,7 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col gap-6 rounded-3xl p-8 text-white lg:col-span-2"
-            style={{ background: "linear-gradient(160deg, #0a3d62 0%, #044d7a 50%, #032e4a 100%)" }}
+            style={{ background: "linear-gradient(160deg, #001F4D 0%, #003D7A 60%, #002B5C 100%)" }}
           >
             {/* Accroche */}
             <div>

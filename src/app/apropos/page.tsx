@@ -59,7 +59,7 @@ const timeline = [
     title: "Fondation",
     description:
       "Création de Lomé Turque Brique à Adétikopé avec la vision de fournir des matériaux de qualité au Togo.",
-    color: "#0666A2",
+    color: "#003D7A",
     isTop: false,
   },
   {
@@ -67,7 +67,7 @@ const timeline = [
     title: "1ers Produits",
     description:
       "Lancement des gammes Briques Creuses et Pleines, premières livraisons sur chantier à Lomé.",
-    color: "#C4622D",
+    color: "#0099FF",
     isTop: true,
   },
   {
@@ -75,7 +75,7 @@ const timeline = [
     title: "Modèle Turque",
     description:
       "Introduction du modèle turque authentique, alliant savoir-faire traditionnel et performance moderne.",
-    color: "#7A3B1E",
+    color: "#002B5C",
     isTop: false,
   },
   {
@@ -83,14 +83,14 @@ const timeline = [
     title: "100+ Chantiers",
     description:
       "Cap des 100 chantiers livrés franchi. Modernisation complète des équipements de production.",
-    color: "#044d7a",
+    color: "#0099FF",
     isTop: true,
   },
   {
     year: "2024",
     title: "Expansion",
     description: "Lancement de la gamme Pavés et extension des livraisons au-delà de Lomé.",
-    color: "#0666A2",
+    color: "#003D7A",
     isTop: false,
   },
 ];
